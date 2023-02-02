@@ -16,8 +16,6 @@ public class Product {
     @Id
     @GeneratedValue
     private Long id;
-    @ManyToOne
-    private User user;
     private String name;
     @Column(name = "image",length = Integer.MAX_VALUE)
     private String image;
@@ -30,4 +28,6 @@ public class Product {
     private int numReviews;
     private double price;
     private int countInStock;
+    @ManyToOne
+    private Shop shop;
 }

@@ -30,11 +30,8 @@ public class User implements UserDetails {
     private String ville;
     private String adresse;
     private String password;
-
-    @OneToMany(mappedBy = "user")
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private List<Product> products;
-
+    @OneToOne(mappedBy = "user")
+    private Shop shop;
     @OneToMany(mappedBy = "user")
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private List<Review> reviews;

@@ -30,7 +30,6 @@ public class ProductServiceImpl implements ProductService{
     public ProductDTO saveProduct(ProductDTO productDTO) {
       Product product=  productMapper.fromProductDTO(productDTO);
        // System.out.println(product);
-      product.setUser(userRepository.findByEmail(product.getUser().getEmail()).orElseThrow());
         Product savedProduct=productRepository.save(product);
 
         return productMapper.fromProduct(savedProduct);

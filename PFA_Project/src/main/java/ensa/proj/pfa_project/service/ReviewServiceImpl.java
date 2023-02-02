@@ -23,7 +23,7 @@ public class ReviewServiceImpl implements ReviewService{
     public ReviewDTO saveReview(ReviewDTO reviewDTO,Long productId) {
         Review review=reviewMapper.fromReviewDTO(reviewDTO);
         Product product=productRepository.findProductById(productId).orElseThrow();
-        review.setUser(userRepository.findByEmail(reviewDTO.getUserDTO().getEmail()).orElseThrow());
+        review.setUser(userRepository.findById(reviewDTO.getUserId()).orElseThrow());
         review.setProduct(product);
         product.getReviews().add(review);
         product.setNumReviews(product.getNumReviews()+1);

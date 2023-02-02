@@ -10,5 +10,5 @@ public class UserDTO {
     private String tele;
     private String ville;
     private String adresse;
-
+    private ShopDTO shopDTO;
 }

@@ -7,7 +7,9 @@ import java.util.Date;
 
 @Data
 public class ReviewDTO {
-    private UserDTO userDTO;
+    private Long UserId;
+    private String OwnerFirstName;
+    private String OwnerLastName;
     private double rating;
     private String comment;
     private Date createdAt;

@@ -2,6 +2,7 @@ package ensa.proj.pfa_project.auth;
 
 
 import ensa.proj.pfa_project.entities.Role;
+import ensa.proj.pfa_project.entities.Shop;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
