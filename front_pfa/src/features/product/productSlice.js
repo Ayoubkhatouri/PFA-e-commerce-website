@@ -16,6 +16,13 @@ const initialState={
         Errorcreate:false,
         messagecreate:''
     },
+    createShopInfo:{
+        createdShop: {},
+        SuccesscreateShop:false,
+        LoadingcreateShop:false,
+        ErrorcreateShop:false,
+        messagecreateShop:''
+    },
 }
 
 //get all Products
@@ -29,6 +36,7 @@ export const listProducts=createAsyncThunk('products/getAll',async(_,thunkAPI)=>
     }
 })
 
+
 //create a product
 export const createProduct=createAsyncThunk('product/create',async(product,thunkAPI)=>{
     try {
@@ -39,6 +47,26 @@ export const createProduct=createAsyncThunk('product/create',async(product,thunk
         return thunkAPI.rejectWithValue(message)
     }
 })
+
+//create a shop
+export const createShop=createAsyncThunk('shop/create',async(shop,thunkAPI)=>{
+    try {
+       return  await productService.createShop(shop)
+    } catch (error) {
+        const message=(error.response &&  error.response.data && error.response.data.message) 
+        || error.message || error.toString()
+        return thunkAPI.rejectWithValue(message)
+    }
+})
+
+
+
+
+
+
+
+
+
 
 export const productSlice=createSlice({
     name:'product',
@@ -85,6 +113,21 @@ export const productSlice=createSlice({
                 state.createProductInfo.Loadingcreate=false
                 state.createProductInfo.Errorcreate= true  
                 state.createProductInfo.messagecreate=action.payload 
+        })
+
+
+        .addCase(createShop.pending,(state)=>{
+            state.createShopInfo.LoadingcreateShop=true
+        })
+            .addCase(createShop.fulfilled,(state,action)=>{
+            state.createShopInfo.LoadingcreateShop=false
+            state.createShopInfo.SuccesscreateShop= true       
+            state.createShopInfo.createdShop=action.payload
+        })
+            .addCase(createShop.rejected,(state,action)=>{
+                state.createShopInfo.LoadingcreateShop=false
+                state.createShopInfo.ErrorcreateShop= true  
+                state.createShopInfo.messagecreateShop=action.payload 
         })
 
     }

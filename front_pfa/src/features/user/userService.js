@@ -21,10 +21,22 @@ const register=async(userdata)=>{
     return data
 }
 
+//get user details
+const getUserDetails=async(id)=>{
+    const config={
+        headers:{
+           // Authorization:`Bearer ${token}`
+        }
+    }
+    const {data}=await axios.get(`/api/users/${id}`)
+    return data
+}
+
 
 const userService={
     login,
-    register
+    register,
+    getUserDetails
 }
 
 export default userService

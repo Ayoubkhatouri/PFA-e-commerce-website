@@ -6,10 +6,18 @@ const userLogin=JSON.parse(localStorage.getItem('userLogin'))
 
 const initialState={
     userLogin:userLogin ? userLogin : null,
+    
     isError:false,
     isSuccess:false,
     isLoading:false,
     message:'',
+    UserDetailsInfo:{
+        userDetails:{},
+        SuccessgetUserDetails:false,    
+        LoadinggetUserDetails:false,
+        ErrorgetUserDetails:false,
+        messagegetUserDetails:''
+    },
 }
 
 
@@ -31,6 +39,18 @@ export const login=createAsyncThunk('user/login',async(userData,thunkAPI)=>{
 export const register=createAsyncThunk('user/register',async(userData,thunkAPI)=>{
     try {
         return await userService.register(userData) 
+    } catch (error) {
+        const message=(error.response &&  error.response.data && error.response.data.message) 
+        || error.message || error.toString()
+        return thunkAPI.rejectWithValue(message)
+    }
+})
+
+//get user profile
+export const getUserDetails=createAsyncThunk('user/details',async(id,thunkAPI)=>{
+    try {
+       
+        return await userService.getUserDetails(id)
     } catch (error) {
         const message=(error.response &&  error.response.data && error.response.data.message) 
         || error.message || error.toString()
@@ -79,6 +99,26 @@ export const userSlice =createSlice({
         state.message=action.payload
         state.userLogin=null
     })
+
+
+       /////////////////////////
+.addCase(getUserDetails.pending,(state)=>{
+    state.UserDetailsInfo.LoadinggetUserDetails=true
+})
+    .addCase(getUserDetails.fulfilled,(state,action)=>{
+    state.UserDetailsInfo.LoadinggetUserDetails=false
+    state.UserDetailsInfo.SuccessgetUserDetails= true       
+    state.UserDetailsInfo.userDetails=action.payload
+})
+    .addCase(getUserDetails.rejected,(state,action)=>{
+    state.UserDetailsInfo.LoadinggetUserDetails=false
+    state.UserDetailsInfo.ErrorgetUserDetails=true
+    state.UserDetailsInfo.messagegetUserDetails=action.payload 
+})
+
+
+
+
     }
 })
 

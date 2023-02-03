@@ -20,12 +20,26 @@ const createProduct=async(product)=>{
    return data
  }
  
+  //create a shop
+const createShop=async(shop)=>{
+ 
+   const config={
+      headers:{
+       'Content-Type':'application/json'
+      }
+   }
+
+  const {data}= await axios.post(`/api/shops/create`,shop)
+  return data
+}
+
 
 
  
  const productService={
     listProducts,
-    createProduct
+    createProduct,
+    createShop
  }
 
  export default productService

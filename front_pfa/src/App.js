@@ -14,6 +14,8 @@ import CreateProductScreen from './screens/CreateProductScreen';
 import Footer from './components/Footer';
 import ScrollToTop from './components/ScrollToTop';
 import BackToTopButton from './components/BackToTopButton';
+import CreateShopScreen from './screens/CreateShopScreen';
+import ShopScreen from './screens/ShopScreen';
 
 
 
@@ -34,6 +36,8 @@ function App() {
       <Route path="/users/register" element={<RegisterScreen/>}/>
       <Route path="/users/abonnez" element={<LoginScreen/>}/>
       <Route path="/products/create" element={<CreateProductScreen/>}/>
+      <Route path="/shop/create" element={<CreateShopScreen/>}/>
+      <Route path="/shop/:id" element={<ShopScreen/>}/>
       </Routes>
       </Container>
       </main>

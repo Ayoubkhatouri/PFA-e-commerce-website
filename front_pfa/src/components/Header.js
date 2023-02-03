@@ -4,6 +4,7 @@ import { Navbar,Nav,NavDropdown, Button } from 'react-bootstrap'
 import { LinkContainer} from 'react-router-bootstrap'
 import { useSelector,useDispatch } from 'react-redux'
 import context1 from '../context1'
+import { getUserDetails } from '../features/user/userSlice'
 
 
 const Header = () => {
@@ -16,12 +17,13 @@ const Header = () => {
  const user=useSelector(state=>state.user)
   const {userLogin}=user
 
-//  const {LoadingUserDetails,ErrorUserDetails,userDetails}=user.UserDetailsInfo
+  const {LoadingUserDetails,ErrorUserDetails,userDetails}=user.UserDetailsInfo
  
   
   useEffect(()=>{
-   // if(userLogin)
- //   dispatch(getUserDetails(userLogin.userId))
+    if(userLogin)
+    dispatch(getUserDetails(userLogin.id))
+    console.log(userLogin)
 },[dispatch,userLogin])
 
   const logoutHandler=()=>{
@@ -51,10 +53,15 @@ const Header = () => {
                 <LinkContainer to={`users/profile`} >
                   <NavDropdown.Item>{isEn ? "Profil":"Profile"}</NavDropdown.Item>
                 </LinkContainer>
-              
-                <LinkContainer to={`products/create`} >
-                  <NavDropdown.Item>{isEn ? "Demands Sent":"Create Product"} </NavDropdown.Item>
-                </LinkContainer>
+           {userDetails.shopDTO ?
+           <LinkContainer to={`shop/${userDetails.shopDTO.id}`} >
+           <NavDropdown.Item>{isEn ? "Your Shop":"Votre Boutique"} </NavDropdown.Item>
+         </LinkContainer> :
+         <LinkContainer to={`shop/create`} >
+         <NavDropdown.Item>{isEn ? "Create Your Shop":"Crée Votre Boutique"} </NavDropdown.Item>
+       </LinkContainer>
+           }
+                
                 {((userLogin && userLogin.roles && userLogin.roles.includes("Proprietaire")) /*|| userDetails.isAgence*/)&&  (
                   <>
                   <LinkContainer to={`users/demandes/recus`} >

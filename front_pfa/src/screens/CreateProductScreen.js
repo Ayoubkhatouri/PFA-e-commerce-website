@@ -1,4 +1,3 @@
-import axios from 'axios'
 import React,{useState,useEffect} from 'react'
 import { Link, useNavigate, useLocation ,useParams} from "react-router-dom"
 import {Form ,Button, Spinner} from 'react-bootstrap'
@@ -9,10 +8,8 @@ import Loader from '../components/Loader'
 
 
  const CreateProductScreen  = () => {
-    const params=useParams()
-    const productId=params.id
-   
-    let a=""
+
+
     const [name,setName]=useState('')
     const [price,setPrice]=useState(0)
     const [image,setImage]=useState('')
@@ -23,7 +20,6 @@ import Loader from '../components/Loader'
     const [uploading,setUploading]=useState(false)
    
 
-    const location=useLocation()
     const dispatch=useDispatch()
     const navigate=useNavigate()
     const product=useSelector(state=>state.product)
@@ -93,7 +89,7 @@ const submitHandler=(e)=>{
 
   return (
     <>
-    <Link to='/' className='btn btn-light my-3'><i class="fa-solid fa-arrow-left"></i> Go Back</Link>
+    <Link to='/' className='btn btn-light my-3'><i className="fa-solid fa-arrow-left"></i> Go Back</Link>
     <FormContainer>
         <h1 className='addLine'>Create product</h1>
         {Loadingcreate && <Loader/>}
