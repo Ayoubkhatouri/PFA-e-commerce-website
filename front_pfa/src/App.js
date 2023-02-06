@@ -16,6 +16,7 @@ import ScrollToTop from './components/ScrollToTop';
 import BackToTopButton from './components/BackToTopButton';
 import CreateShopScreen from './screens/CreateShopScreen';
 import ShopScreen from './screens/ShopScreen';
+import ProductScreen from './screens/ProductScreens';
 
 
 
@@ -38,6 +39,7 @@ function App() {
       <Route path="/products/create" element={<CreateProductScreen/>}/>
       <Route path="/shop/create" element={<CreateShopScreen/>}/>
       <Route path="/shop/:id" element={<ShopScreen/>}/>
+      <Route path="/product/:id" element={<ProductScreen/>}/>
       </Routes>
       </Container>
       </main>

@@ -21,6 +21,7 @@ const Header = () => {
  
   
   useEffect(()=>{
+    
     if(userLogin)
     dispatch(getUserDetails(userLogin.id))
     console.log(userLogin)

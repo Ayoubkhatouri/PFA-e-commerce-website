@@ -7,6 +7,7 @@ import java.util.Date;
 
 @Data
 public class ReviewDTO {
+    private Long id;
     private Long UserId;
     private String OwnerFirstName;
     private String OwnerLastName;

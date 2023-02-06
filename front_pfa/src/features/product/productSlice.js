@@ -23,6 +23,19 @@ const initialState={
         ErrorcreateShop:false,
         messagecreateShop:''
     },
+    productDetails:{
+        product:[],
+        isError:false,
+        isSuccess:false,
+        isLoading:false,
+        message:''
+    },
+    createReviewInfo:{
+        Successcreate:false,
+        Loadingcreate:false,
+        Errorcreate:false,
+        messageErrorcreate:''
+    },
 }
 
 //get all Products
@@ -59,6 +72,27 @@ export const createShop=createAsyncThunk('shop/create',async(shop,thunkAPI)=>{
     }
 })
 
+//get product details
+export const listProductDetails=createAsyncThunk('products/getOne',async(id,thunkAPI)=>{
+    try {
+        return await productService.listProductDetails(id)
+    } catch (error) {
+        const message=(error.response &&  error.response.data && error.response.data.message) 
+        || error.message || error.toString()
+        return thunkAPI.rejectWithValue(message)
+    }
+})
+
+//update a product
+export const productCreateReview=createAsyncThunk('product/review',async(productId_and_review,thunkAPI)=>{
+    try {
+       return  await productService.productCreateReview(productId_and_review)
+    } catch (error) {
+        const message=(error.response &&  error.response.data && error.response.data.message) 
+        || error.message || error.toString()
+        return thunkAPI.rejectWithValue(message)
+    }
+})
 
 
 
@@ -129,6 +163,36 @@ export const productSlice=createSlice({
                 state.createShopInfo.ErrorcreateShop= true  
                 state.createShopInfo.messagecreateShop=action.payload 
         })
+
+       
+            .addCase(listProductDetails.pending,(state)=>{
+                state.productDetails.isLoading=true
+            })
+            .addCase(listProductDetails.fulfilled,(state,action)=>{
+                state.productDetails.isLoading=false
+                state.productDetails.isSuccess=true
+                state.productDetails.product=action.payload 
+            
+            })
+            .addCase(listProductDetails.rejected,(state,action)=>{
+                state.productDetails.isLoading=false
+                state.productDetails.isError=true
+                state.productDetails.message=action.payload 
+            })
+
+            .addCase(productCreateReview.pending,(state)=>{
+                state.createReviewInfo.Loadingcreate=true
+            })
+                .addCase(productCreateReview.fulfilled,(state,action)=>{
+                state.createReviewInfo.Loadingcreate=false
+                state.createReviewInfo.Successcreate= true   
+              
+            })
+                .addCase(productCreateReview.rejected,(state,action)=>{
+                    state.createReviewInfo.Loadingcreate=false
+                    state.createReviewInfo.Errorcreate= true  
+                    state.createReviewInfo.messageErrorcreate=action.payload
+            })
 
     }
 })

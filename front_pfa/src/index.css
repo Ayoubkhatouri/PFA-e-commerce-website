@@ -232,3 +232,99 @@ color: rgb(100, 100, 3);
   }
 }
 /*End Footer*/
+
+
+
+#ct{
+  width: 600px;
+   border:1px solid #f1c40f;
+   margin: 20px auto;
+   text-align:center;
+   position:relative;
+   color:black;
+   padding:10px;}
+#ct span{
+  background:white;
+  color:#f1c40f;
+  padding:0 10px;
+  font-size:20px;
+  position:relative; 
+  top:-28px;
+}
+@media only screen and (max-width: 768px) {
+	#ct{
+    width: 400px;
+  }
+}
+@media only screen and (max-width: 440px) {
+	#ct{
+    width: 250px;
+  }
+}
+@media only screen and (max-width: 290px) {
+	#ct{
+    width: 190px;
+  }
+}
+.corner{height:30px;
+  width:30px;
+  border-radius:50%;
+  border:1px solid #fff;
+  transform:rotate(-45deg);  
+  position:absolute;
+  background:white;
+}
+
+#left_top{
+  top:-16px;
+  left:-16px;
+  border-color:transparent transparent #f1c40f transparent;
+}
+#right_top{
+  top:-16px;
+  right:-16px;
+  border-color:transparent transparent transparent #f1c40f;
+}
+#left_bottom{
+  bottom:-16px;
+  left:-16px;
+  border-color:transparent #f1c40f transparent transparent ;
+}
+#right_bottom{
+  bottom:-16px;
+  right:-16px;
+  border-color:#f1c40f transparent transparent transparent;
+}
+
+
+
+.myList{
+  margin-top: 20px;
+  padding: 0;
+}
+.myList li{
+  font-weight: bold;
+  list-style: none;
+  padding: 10px;
+  border:1px solid rgb(219, 214, 214);
+  font-size: 17px;
+  background-color: white;
+ cursor: pointer;
+}
+
+.myList li:hover{
+  background-color: rgb(219, 214, 214);
+  transition: .3s;
+  margin-left: 5px;
+  
+}
+
+.comments{
+  margin-top: 10px;
+  height: 40px;
+font-weight: bold;
+border-bottom: 2px solid #2c3e50 ;
+color: #2c3e50 ;
+margin-left: 0 !important;
+white-space: nowrap
+}

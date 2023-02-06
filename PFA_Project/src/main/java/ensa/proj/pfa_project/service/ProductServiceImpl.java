@@ -22,9 +22,7 @@ public class ProductServiceImpl implements ProductService{
 
     private ProductRepository productRepository;
     private  ProductMapperImpl productMapper;
-    private UserRepository userRepository;
-    private ReviewMapperImpl reviewMapper;
-    private ReviewRepository reviewRepository;
+
 
     @Override
     public ProductDTO saveProduct(ProductDTO productDTO) {
@@ -39,5 +37,10 @@ public class ProductServiceImpl implements ProductService{
     public List<ProductDTO> listProducts() {
         List<Product> products= productRepository.findAll();
         return products.stream().map(p->productMapper.fromProduct(p)).collect(Collectors.toList());
+    }
+
+    @Override
+    public ProductDTO getProduct(Long id) {
+        return productMapper.fromProduct( productRepository.findProductById(id).orElseThrow());
     }
 }

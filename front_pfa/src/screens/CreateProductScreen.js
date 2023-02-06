@@ -28,6 +28,7 @@ import Loader from '../components/Loader'
     const {Loadingcreate,Errorcreate,Successcreate,messagecreate,createdProduct}=product.createProductInfo
      
     const user=useSelector(state=>state.user)
+    const {LoadingUserDetails,ErrorUserDetails,userDetails}=user.UserDetailsInfo
     const {userLogin}=user
 
 
@@ -60,16 +61,8 @@ import Loader from '../components/Loader'
 
 const submitHandler=(e)=>{
     e.preventDefault()
-    let userDTO={
-        firstname: userLogin.firstname,
-    lastname: userLogin.lastname,
-    email: userLogin.email,
-    tele: userLogin.tele,
-    ville: userLogin.ville,
-    adresse: userLogin.adresse
-    }
+    
     let product={
-        userDTO,
         name,
         price,
         image,
@@ -77,7 +70,8 @@ const submitHandler=(e)=>{
         category,
         reviewDTOS: [],
         description,
-        countInStock
+        countInStock,
+        shopId:userDetails.shopDTO.id
     }
 
     dispatch(createProduct(product))

@@ -23,10 +23,14 @@ public class ProductController {
     public List<ProductDTO> getAllProducts(){
         return productService.listProducts();
     }
-
+    @GetMapping("/{id}")
+    public ProductDTO getProduct(@PathVariable Long id ){
+        return productService.getProduct(id);
+    }
     @PostMapping("/create")
     public ProductDTO createProduct(@RequestBody ProductDTO productDTO){
         System.out.println(productDTO);
         return productService.saveProduct(productDTO);
     }
+
 }

@@ -33,13 +33,28 @@ const createShop=async(shop)=>{
   return data
 }
 
+ //get a single product Details
+ const listProductDetails=async(id)=>{
+   const response=await axios.get(`/api/products/${id}`)
+   return response.data
+
+}
+
+//create a review
+const productCreateReview=async(productId_and_review)=>{
+   //get user info
+console.log(productId_and_review)
+return await axios.post(`/api/reviews/create`,productId_and_review.review)
+}
 
 
  
  const productService={
     listProducts,
     createProduct,
-    createShop
+    createShop,
+    listProductDetails,
+    productCreateReview
  }
 
  export default productService

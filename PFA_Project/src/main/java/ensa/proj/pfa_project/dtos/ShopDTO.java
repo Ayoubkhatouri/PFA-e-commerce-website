@@ -14,5 +14,4 @@ public class ShopDTO {
     private Long userId;
     private String OwnerFirstName;
     private String OwnerLastName;
-
 }
