@@ -15,9 +15,10 @@ import Footer from './components/Footer';
 import ScrollToTop from './components/ScrollToTop';
 import BackToTopButton from './components/BackToTopButton';
 import CreateShopScreen from './screens/CreateShopScreen';
-import ShopScreen from './screens/ShopScreen';
+import ShopAdminScreen from './screens/ShopAdminScreen';
 import ProductScreen from './screens/ProductScreens';
 import ShopUserScreen from './screens/shopUserScreen';
+import EditShopScreen from './screens/EditShopScreen';
 
 
 function App() {
@@ -38,9 +39,10 @@ function App() {
       <Route path="/users/abonnez" element={<LoginScreen/>}/>
       <Route path="/products/create" element={<CreateProductScreen/>}/>
       <Route path="/shop/create" element={<CreateShopScreen/>}/>
-      <Route path="/shop/admin/:id" element={<ShopScreen/>}/>
+      <Route path="/shop/admin/:id" element={<ShopAdminScreen/>}/>
       <Route path="/product/:id" element={<ProductScreen/>}/>
       <Route path="/shop/:id" element={<ShopUserScreen/>}/>
+      <Route path="/shop/admin/edit/:id" element={<EditShopScreen/>}/>
       </Routes>
       </Container>
       </main>

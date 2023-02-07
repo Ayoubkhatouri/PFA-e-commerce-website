@@ -377,12 +377,11 @@ background-color: rgb(243, 243, 243);
 }
 .shop{
   background-color:  whitesmoke;
-  margin: 10px;
+  margin: 10px 10px;
   box-shadow: rgba(0, 0, 0, 0.3) 0px 3px 8px;
   border-radius: 10px;
  display: flex;
-  
-  
+
 }
 .titleShop{
   margin: auto;
@@ -404,4 +403,24 @@ background-color: rgb(243, 243, 243);
   text-align: center;
  flex-grow: 3;
  color: black ;
+}
+.shopList{
+  height: 450px;
+  overflow-x: hidden;
+  overflow-y: auto  ;
+}
+
+.shopList::-webkit-scrollbar {
+  width: 7px;
+  background-color:white ;
+  scroll-behavior: smooth;
+}
+
+::-webkit-scrollbar-track {
+  background: #d9e3f1;
+  border-radius: 10px;
+}
+.shopList::-webkit-scrollbar-thumb {
+  background: #2c3e50;
+  border-radius: 10px;
 }

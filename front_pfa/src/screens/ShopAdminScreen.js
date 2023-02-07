@@ -4,14 +4,16 @@ import { useDispatch, useSelector } from 'react-redux'
 import { LinkContainer } from 'react-router-bootstrap'
 import Products from '../components/Products'
 import { getUserDetails } from '../features/user/userSlice'
+import { useParams } from 'react-router-dom'
 
 
 
-const ShopScreen = () => {
+const ShopAdminScreen = () => {
 
   const user=useSelector(state=>state.user)
   const {userLogin}=user
   const dispatch=useDispatch()
+  const params=useParams()
   
 console.log(userLogin)
   const {LoadingUserDetails,ErrorUserDetails,userDetails}=user.UserDetailsInfo
@@ -48,7 +50,9 @@ console.log(userLogin)
            borderRight: "5px solid white"
         }}>
           <ul className='myList'>
+          <LinkContainer to={`/shop/admin/edit/${params.id}`}>
             <li >Edit Your Shop</li>
+            </LinkContainer>
             <LinkContainer to="/products/create">
             <li >Add Product</li>
             </LinkContainer>
@@ -71,4 +75,4 @@ console.log(userLogin)
   )
 }
 
-export default ShopScreen
+export default ShopAdminScreen
