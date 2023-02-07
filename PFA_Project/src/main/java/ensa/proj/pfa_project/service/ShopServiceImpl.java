@@ -11,6 +11,9 @@ import ensa.proj.pfa_project.repositories.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @AllArgsConstructor
 public class ShopServiceImpl implements ShopService{
@@ -31,7 +34,14 @@ public class ShopServiceImpl implements ShopService{
     }
 
     @Override
-    public ShopDTO findShopByUser(UserDTO userDTO) {
-        return shopMapper.fromShop(shopRepository.findByUser(userMapper.fromUserDTO(userDTO)).orElseThrow());
+    public List<ShopDTO> getAllShops() {
+        return shopRepository.findAll().stream().map(s->shopMapper.fromShop(s)).collect(Collectors.toList());
     }
+
+    @Override
+    public ShopDTO getShop(Long id) {
+        return shopMapper.fromShop( shopRepository.findById(id).orElseThrow());
+    }
+
+
 }

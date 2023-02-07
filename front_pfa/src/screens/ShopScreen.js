@@ -38,6 +38,7 @@ console.log(userLogin)
     <p><i>&ldquo; {userDetails && userDetails.shopDTO && userDetails.shopDTO.description}&rdquo; </i></p>
   </blockquote>
 </div>
+
       <Row style={{
         marginBottom:"40px",
         marginTop:"40px",
@@ -57,13 +58,13 @@ console.log(userLogin)
           </ul>      
                         
         </Col >
-        <Col sm={12} md={8} lg={9} xl={10}>
-          {userDetails && userDetails.shopDTO && userDetails.shopDTO.productsDto.map((product)=>(
-            <Col  key={product.id} sm={12} md={6} lg={4} xl={3}>
+        {userDetails && userDetails.shopDTO && userDetails.shopDTO.productsDto.map((product)=>(
+        <Col  key={product.id} sm={12} md={6} lg={4} xl={3}>
             <Products product={product}/>
+           
             </Col>
           ))}
-        </Col>
+         
       </Row>
     </>
   

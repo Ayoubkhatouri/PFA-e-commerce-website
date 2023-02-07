@@ -6,10 +6,7 @@ import ensa.proj.pfa_project.dtos.ReviewDTO;
 import ensa.proj.pfa_project.service.ReviewService;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/reviews")
@@ -20,6 +17,10 @@ public class ReviewController {
     @PostMapping("/create")
     public ReviewDTO createReview(@RequestBody ReviewDTOAndproductId reviewDTOAndproductId){
         return reviewService.saveReview(reviewDTOAndproductId.getReviewDTO(),reviewDTOAndproductId.getProductId());
+    }
+    @DeleteMapping("/delete/{id}")
+    public void deleteReview(@PathVariable Long id){
+        reviewService.deleteReview(id);
     }
 }
 

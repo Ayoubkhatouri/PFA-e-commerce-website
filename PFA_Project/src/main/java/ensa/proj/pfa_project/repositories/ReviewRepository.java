@@ -8,5 +8,5 @@ import java.util.Date;
 import java.util.Optional;
 
 public interface ReviewRepository extends JpaRepository<Review,String> {
-    Optional<Review> findByCreatedAt(Date date);
+    Optional<Review> findReviewById(Long  id);
 }

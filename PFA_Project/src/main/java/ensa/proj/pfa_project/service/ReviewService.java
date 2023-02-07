@@ -8,5 +8,6 @@ import java.util.List;
 
 public interface ReviewService {
     ReviewDTO saveReview(ReviewDTO reviewDTO,Long productId);
+    void deleteReview(Long id);
 
 }

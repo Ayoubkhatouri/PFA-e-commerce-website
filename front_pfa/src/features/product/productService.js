@@ -43,10 +43,29 @@ const createShop=async(shop)=>{
 //create a review
 const productCreateReview=async(productId_and_review)=>{
    //get user info
-console.log(productId_and_review)
-return await axios.post(`/api/reviews/create`,productId_and_review.review)
+const {data}= await axios.post(`/api/reviews/create`,productId_and_review)
+return data
 }
 
+//delete  a review
+const deleteReview=async(idrev)=>{
+const  {data}=await axios.delete(`/api/reviews/delete/${idrev}`)
+return data
+}
+
+//get shops
+const listShops=async()=>{
+   const response=await  axios.get(`/api/shops/getAll`)
+ 
+   return response.data
+}
+
+ //get a single product Details
+ const listShopDetails=async(id)=>{
+   const response=await axios.get(`/api/shops/${id}`)
+   return response.data
+
+}
 
  
  const productService={
@@ -54,7 +73,10 @@ return await axios.post(`/api/reviews/create`,productId_and_review.review)
     createProduct,
     createShop,
     listProductDetails,
-    productCreateReview
+    productCreateReview,
+    deleteReview,
+    listShops,
+    listShopDetails
  }
 
  export default productService

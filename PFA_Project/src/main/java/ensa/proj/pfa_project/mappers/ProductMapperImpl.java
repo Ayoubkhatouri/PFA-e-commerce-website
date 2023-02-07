@@ -20,7 +20,7 @@ public class ProductMapperImpl {
     public ProductDTO fromProduct(Product product){
         ProductDTO productDTO=new ProductDTO();
         BeanUtils.copyProperties(product,productDTO);
-        productDTO.setShopId(shopRepository.findById(product.getId()).orElseThrow().getId());
+        productDTO.setShopId(shopRepository.findById(product.getShop().getId()).orElseThrow().getId());
         productDTO.setReviewDTOS(product.getReviews().stream().map(r->reviewMapper.fromReview(r)).collect(Collectors.toList()));
         return productDTO;
     }

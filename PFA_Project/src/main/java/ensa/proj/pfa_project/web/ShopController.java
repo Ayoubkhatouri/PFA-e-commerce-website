@@ -1,10 +1,13 @@
 package ensa.proj.pfa_project.web;
 
+import ensa.proj.pfa_project.dtos.ProductDTO;
 import ensa.proj.pfa_project.dtos.ShopDTO;
 import ensa.proj.pfa_project.dtos.UserDTO;
 import ensa.proj.pfa_project.service.ShopService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/shops")
@@ -17,5 +20,12 @@ public class ShopController {
     public ShopDTO createShop(@RequestBody ShopDTO shopDTO){
         return shopService.saveShop(shopDTO);
     }
-
+    @GetMapping("/getAll")
+    public List<ShopDTO> getAllShops(){
+        return shopService.getAllShops();
+    }
+    @GetMapping("/{id}")
+    public ShopDTO getAllShop(@PathVariable Long id){
+        return shopService.getShop(id);
+    }
 }

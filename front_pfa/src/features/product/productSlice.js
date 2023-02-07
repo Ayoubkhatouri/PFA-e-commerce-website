@@ -31,10 +31,31 @@ const initialState={
         message:''
     },
     createReviewInfo:{
+      
         Successcreate:false,
         Loadingcreate:false,
         Errorcreate:false,
         messageErrorcreate:''
+    },
+    deleteReviewInfo:{
+        Successdelete:false,
+        Loadingdelete:false,
+        Errordelete:false,
+        messageErrordelete:''
+    },
+    shopsDetails:{
+        shops:[],
+        isError:false,
+        isSuccess:false,
+        isLoading:false,
+        message:''
+    },
+    shopDetails:{
+        shop:{},
+        isErrorshop:false,
+        isSuccessshop:false,
+        isLoadingshop:false,
+        messageshop:''
     },
 }
 
@@ -94,8 +115,39 @@ export const productCreateReview=createAsyncThunk('product/review',async(product
     }
 })
 
+//delete a review
+export const deleteReview=createAsyncThunk("/reviews/deleteReview",async(idrev,thunkAPI)=>{
+    try {
+      return  await productService.deleteReview(idrev)
+    } catch (error) {
+        const message=(error.response &&  error.response.data && error.response.data.message) 
+        || error.message || error.toString()
+        return thunkAPI.rejectWithValue(message)
+    }
+})
 
 
+//get all shops
+export const listShops=createAsyncThunk('shops/getAll',async(_,thunkAPI)=>{
+    try {
+        return await productService.listShops()
+    } catch (error) {
+        const message=(error.response &&  error.response.data && error.response.data.message) 
+        || error.message || error.toString()
+        return thunkAPI.rejectWithValue(message)
+    }
+})
+
+//get shop details
+export const listShopDetails=createAsyncThunk('shops/getOne',async(id,thunkAPI)=>{
+    try {
+        return await productService.listShopDetails(id)
+    } catch (error) {
+        const message=(error.response &&  error.response.data && error.response.data.message) 
+        || error.message || error.toString()
+        return thunkAPI.rejectWithValue(message)
+    }
+})
 
 
 
@@ -114,7 +166,24 @@ export const productSlice=createSlice({
                 Errorcreate:false,
                 messagecreate:''
             }
-        }
+        },
+        reset2:(state)=>{
+            state.createReviewInfo={
+        Successcreate:false,
+        Loadingcreate:false,
+        Errorcreate:false,
+        messageErrorcreate:''
+            }
+        },
+        reset3:(state)=>{
+            state.deleteReviewInfo={
+                Successdelete:false,
+                Loadingdelete:false,
+                Errordelete:false,
+                messageErrordelete:''
+            }
+        },
+        
 
     },
     
@@ -126,7 +195,7 @@ export const productSlice=createSlice({
         .addCase(listProducts.fulfilled,(state,action)=>{
             state.productsDetails.isLoading=false
             state.productsDetails.isSuccess=true
-            state.productsDetails.products=action.payload //cause we sed more data in payload (porductController.js)
+            state.productsDetails.products=action.payload 
         
         })
         .addCase(listProducts.rejected,(state,action)=>{
@@ -186,7 +255,7 @@ export const productSlice=createSlice({
                 .addCase(productCreateReview.fulfilled,(state,action)=>{
                 state.createReviewInfo.Loadingcreate=false
                 state.createReviewInfo.Successcreate= true   
-              
+                
             })
                 .addCase(productCreateReview.rejected,(state,action)=>{
                     state.createReviewInfo.Loadingcreate=false
@@ -194,8 +263,50 @@ export const productSlice=createSlice({
                     state.createReviewInfo.messageErrorcreate=action.payload
             })
 
+            .addCase(deleteReview.pending,(state)=>{
+                state.deleteReviewInfo.Loadingdelete=true
+            })
+                .addCase(deleteReview.fulfilled,(state,action)=>{
+                state.deleteReviewInfo.Loadingdelete=false
+                state.deleteReviewInfo.Successdelete= true   
+              
+            })
+                .addCase(deleteReview.rejected,(state,action)=>{
+                    state.deleteReviewInfo.Loadingdelete=false
+                    state.deleteReviewInfo.Errordelete= true  
+                    state.deleteReviewInfo.messageErrordelete=action.payload
+            })
+
+            .addCase(listShops.pending,(state)=>{
+                state.shopsDetails.isLoading=true
+            })
+            .addCase(listShops.fulfilled,(state,action)=>{
+                state.shopsDetails.isLoading=false
+                state.shopsDetails.isSuccess=true
+                state.shopsDetails.shops=action.payload 
+            
+            })
+            .addCase(listShops.rejected,(state,action)=>{
+                state.shopsDetails.isLoading=false
+                state.shopsDetails.isError=true
+                state.shopsDetails.message=action.payload 
+            })
+
+            .addCase(listShopDetails.pending,(state)=>{
+                state.shopDetails.isLoadingshop=true
+            })
+            .addCase(listShopDetails.fulfilled,(state,action)=>{
+                state.shopDetails.isLoadingshop=false
+                state.shopDetails.isSuccessshop=true
+                state.shopDetails.shop=action.payload 
+            })
+            .addCase(listShopDetails.rejected,(state,action)=>{
+                state.shopDetails.isLoadingshop=false
+                state.shopDetails.isErrorshop=true
+                state.shopDetails.messageshop=action.payload 
+            })
     }
 })
 
-export const {reset}=productSlice.actions
+export const {reset,reset2,reset3}=productSlice.actions
 export default productSlice.reducer

@@ -73,7 +73,7 @@ const submitHandler=(e)=>{
         countInStock,
         shopId:userDetails.shopDTO.id
     }
-
+    
     dispatch(createProduct(product))
    
 }

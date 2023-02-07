@@ -16,6 +16,6 @@ public class ProductDTO {
     private double rating;
     private int numReviews;
     private double price;
-    private double countInStock;
+    private int countInStock;
     private Long ShopId;
 }

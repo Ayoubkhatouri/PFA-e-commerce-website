@@ -24,7 +24,7 @@ const Header = () => {
     
     if(userLogin)
     dispatch(getUserDetails(userLogin.id))
-    console.log(userLogin)
+
 },[dispatch,userLogin])
 
   const logoutHandler=()=>{
@@ -55,7 +55,7 @@ const Header = () => {
                   <NavDropdown.Item>{isEn ? "Profil":"Profile"}</NavDropdown.Item>
                 </LinkContainer>
            {userDetails.shopDTO ?
-           <LinkContainer to={`shop/${userDetails.shopDTO.id}`} >
+           <LinkContainer to={`shop/admin/${userDetails.shopDTO.id}`} >
            <NavDropdown.Item>{isEn ? "Your Shop":"Votre Boutique"} </NavDropdown.Item>
          </LinkContainer> :
          <LinkContainer to={`shop/create`} >

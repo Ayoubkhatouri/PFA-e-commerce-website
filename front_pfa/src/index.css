@@ -326,5 +326,82 @@ font-weight: bold;
 border-bottom: 2px solid #2c3e50 ;
 color: #2c3e50 ;
 margin-left: 0 !important;
-white-space: nowrap
+white-space: nowrap;
+background-color: rgb(243, 243, 243);
+}
+.flexMe2{
+  right: 0 ;
+  position: absolute;
+  color:  red !important;
+  background: none !important;
+  border: none !important;
+  padding: 0px !important;
+}
+/* Media Query for Tablets Ipads portrait mode */
+@media (min-width: 768px) and (max-width: 991px){
+  
+  .myCarousel,.titreNewstoday, .imageCarousel{
+    height: 450px !important;
+  }
+.carousel-caption h2{
+  font-size: 25px;
+}
+
+}
+
+.carousel-caption h2{
+  font-size: 30px;
+  padding: 10px  !important;
+}
+.carousel-caption {
+  color: white !important;
+  background-color: #2c3e50;
+  margin: auto;
+  opacity: 0.7;
+  border-radius: 50%;
+ 
+}
+  
+/* Media Query for Laptops and Desktops */
+@media (min-width: 992px) and (max-width: 1199px){
+ 
+  .myCarousel, .imageCarousel{
+    height: 390px !important;
+  }
+
+}
+.imageCarousel{
+  height: 450px !important;
+  width: 700px !important;
+  
+}
+.shop{
+  background-color:  whitesmoke;
+  margin: 10px;
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 3px 8px;
+  border-radius: 10px;
+ display: flex;
+  
+  
+}
+.titleShop{
+  margin: auto;
+  font-weight: bold;
+  color: #2c3e50;
+}
+.imgStore{
+  background-image: url('../public//images/store.png');
+  background-size: cover;
+  width: 65px;
+  height: 65px;
+  margin-top: auto;
+  margin-bottom: auto;
+  margin-left: 15px;
+
+}
+
+.textStore{
+  text-align: center;
+ flex-grow: 3;
+ color: black ;
 }
