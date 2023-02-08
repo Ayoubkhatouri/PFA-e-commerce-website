@@ -183,7 +183,7 @@ const ProductScreen = () => {
                                          <strong>{review.ownerFirstName} {review.ownerLastName}  </strong>
                                          | {review.createdAt && formaterDate(review.createdAt) }
                                          {userLogin && review.userId ===userLogin.id && 
-                                      <Button  className='btn btn-danger flexMe2' onClick={()=>handlDelete(review.id)}>  <i   className="fa-solid fa-trash del"></i></Button>}
+                                      <Button  className='btn btn-danger flexMe2 ' onClick={()=>handlDelete(review.id)}>  <i   className="fa-solid fa-trash del"></i></Button>}
                                       </span> 
                                       
                                       <div style={{

@@ -5,6 +5,8 @@ import { useDispatch,useSelector } from 'react-redux'
 import FormContainer from '../components/FormContainer'
 import { createProduct,reset} from '../features/product/productSlice'
 import Loader from '../components/Loader'
+import { toast } from 'react-toastify'
+import { getUserDetails } from '../features/user/userSlice'
 
 
  const CreateProductScreen  = () => {
@@ -33,14 +35,20 @@ import Loader from '../components/Loader'
 
 
     useEffect(()=>{
+        dispatch(getUserDetails(userLogin.id))
         if(Successcreate){
+            toast.success("Product Created")
             dispatch(reset())
             navigate('/')
-          
         }
+        if(Errorcreate){
+            toast.error("Error Create Product !")
+            dispatch(reset())
+        }
+        
 
     
-    },[dispatch,Successcreate,navigate])
+    },[dispatch,Successcreate,navigate,Errorcreate,userLogin.id])
 
     const uploadFileHandler=async(e)=>{
         const file=e.target.files[0]
@@ -71,7 +79,7 @@ const submitHandler=(e)=>{
         reviewDTOS: [],
         description,
         countInStock,
-        shopId:userDetails.shopDTO.id
+        shopId:userDetails?.shopDTO?.id
     }
     
     dispatch(createProduct(product))
@@ -83,7 +91,7 @@ const submitHandler=(e)=>{
 
   return (
     <>
-    <Link to='/' className='btn btn-light my-3'><i className="fa-solid fa-arrow-left"></i> Go Back</Link>
+    <Link to={`/shop/admin/${userDetails?.shopDTO?.id}`} className='btn btn-light my-3'><i className="fa-solid fa-arrow-left"></i> Go Back</Link>
     <FormContainer>
         <h1 className='addLine'>Create product</h1>
         {Loadingcreate && <Loader/>}

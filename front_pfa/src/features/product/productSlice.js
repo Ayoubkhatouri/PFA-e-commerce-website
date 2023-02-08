@@ -57,6 +57,18 @@ const initialState={
         isLoadingshop:false,
         messageshop:''
     },
+    updateShopInfo:{
+        Successupdate:false,
+        Loadingupdate:false,
+        Errorupdate:false,
+        messageupdate:''
+    },
+    deleteProductInfo:{
+        SuccessDelete:false,
+        LoadingDelete:false,
+        ErrorDelete:false,
+        messageDelete:''
+    },
 }
 
 //get all Products
@@ -74,7 +86,7 @@ export const listProducts=createAsyncThunk('products/getAll',async(_,thunkAPI)=>
 //create a product
 export const createProduct=createAsyncThunk('product/create',async(product,thunkAPI)=>{
     try {
-       return  await productService.createProduct(product)
+       return  await productService.createProduct(product,thunkAPI)
     } catch (error) {
         const message=(error.response &&  error.response.data && error.response.data.message) 
         || error.message || error.toString()
@@ -149,7 +161,27 @@ export const listShopDetails=createAsyncThunk('shops/getOne',async(id,thunkAPI)=
     }
 })
 
+//update a product
+export const updateShop=createAsyncThunk('product/update',async(shop,thunkAPI)=>{
+    try {
+       return  await productService.updateShop(shop)
+    } catch (error) {
+        const message=(error.response &&  error.response.data && error.response.data.message) 
+        || error.message || error.toString()
+        return thunkAPI.rejectWithValue(message)
+    }
+})
 
+//delete a product
+export const deleteProduct=createAsyncThunk('product/delete',async(id,thunkAPI)=>{
+    try {
+         await productService.deleteProduct(id,thunkAPI)
+    } catch (error) {
+        const message=(error.response &&  error.response.data && error.response.data.message) 
+        || error.message || error.toString()
+        return thunkAPI.rejectWithValue(message)
+    }
+})
 
 
 
@@ -183,7 +215,31 @@ export const productSlice=createSlice({
                 messageErrordelete:''
             }
         },
-        
+        reset4:(state)=>{
+            state.updateShopInfo={
+                Successupdate:false,
+                Loadingupdate:false,
+                Errorupdate:false,
+                messageupdate:''
+            }
+        },
+        reset5:(state)=>{
+            state.deleteProductInfo={
+                SuccessDelete:false,
+                LoadingDelete:false,
+                ErrorDelete:false,
+                messageDelete:''
+            }
+        },
+        reset6:(state)=>{
+            state.createShopInfo={
+                createdShop: {},
+                SuccesscreateShop:false,
+                LoadingcreateShop:false,
+                ErrorcreateShop:false,
+                messagecreateShop:''
+            }
+        },
 
     },
     
@@ -305,8 +361,35 @@ export const productSlice=createSlice({
                 state.shopDetails.isErrorshop=true
                 state.shopDetails.messageshop=action.payload 
             })
+
+            .addCase(updateShop.pending,(state)=>{
+                state.updateShopInfo.Loadingupdate=true
+            })
+                .addCase(updateShop.fulfilled,(state,action)=>{
+                state.updateShopInfo.Loadingupdate=false
+                state.updateShopInfo.Successupdate= true       
+            })
+                .addCase(updateShop.rejected,(state,action)=>{
+                    state.updateShopInfo.Loadingupdate=false
+                    state.updateShopInfo.Errorupdate= true  
+                    state.updateShopInfo.messageupdate=action.payload 
+            })
+
+            .addCase(deleteProduct.pending,(state)=>{
+                state.deleteProductInfo.LoadingDelete=true
+            })
+                .addCase(deleteProduct.fulfilled,(state,action)=>{
+                state.deleteProductInfo.LoadingDelete=false
+                state.deleteProductInfo.SuccessDelete= true       
+        
+            })
+                .addCase(deleteProduct.rejected,(state,action)=>{
+                    state.deleteProductInfo.LoadingDelete=false
+                    state.deleteProductInfo.ErrorDelete= true  
+                    state.deleteProductInfo.messageDelete=action.payload 
+            })
     }
 })
 
-export const {reset,reset2,reset3}=productSlice.actions
+export const {reset,reset2,reset3,reset4,reset5}=productSlice.actions
 export default productSlice.reducer

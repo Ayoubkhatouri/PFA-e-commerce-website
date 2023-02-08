@@ -28,7 +28,9 @@ import {toast} from 'react-toastify'
     useEffect(()=>{
         if(SuccesscreateShop){
             toast.success("Congratulations "+userLogin.firstname+" you have created your own shop")
-            navigate('/shop/'+createdShop.id)
+            localStorage.removeItem('userLogin')
+            navigate('/users/abonnez')
+            window.location.reload()
         }
 
     

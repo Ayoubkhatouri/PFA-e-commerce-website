@@ -22,4 +22,8 @@ public class UserController {
     public UserDTO findUser(@PathVariable Long userId){
         return userMapper.fromUser( userService.findUser(userId));
     }
+    @DeleteMapping("delete/{id}")
+    public void deleteUser(@PathVariable Long id){
+        userService.deleteUser(id);
+    }
 }

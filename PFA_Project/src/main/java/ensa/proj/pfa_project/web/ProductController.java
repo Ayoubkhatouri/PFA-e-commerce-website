@@ -29,8 +29,11 @@ public class ProductController {
     }
     @PostMapping("/create")
     public ProductDTO createProduct(@RequestBody ProductDTO productDTO){
-        System.out.println(productDTO);
         return productService.saveProduct(productDTO);
+    }
+    @DeleteMapping("/delete/{id}")
+    public void deleteProduct(@PathVariable Long id){
+        productService.deleteProduct(id);
     }
 
 }

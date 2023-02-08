@@ -8,15 +8,17 @@ import axios from "axios";
  }
 
  //create a product
-const createProduct=async(product)=>{
+const createProduct=async(product,thunkAPI)=>{
+   const state=thunkAPI.getState()
+   const userInfo=state.user.userLogin
+
+   const config={
+      headers:{
+         Authorization:`Bearer ${userInfo.token}`
+      }
+   }
  
-    const config={
-       headers:{
-        'Content-Type':'application/json'
-       }
-    }
- 
-   const {data}= await axios.post(`/api/products/create`,product)
+   const {data}= await axios.post(`/api/products/create`,product,config)
    return data
  }
  
@@ -64,9 +66,26 @@ const listShops=async()=>{
  const listShopDetails=async(id)=>{
    const response=await axios.get(`/api/shops/${id}`)
    return response.data
-
 }
 
+//upadre a product
+const updateShop=async(shop)=>{
+  
+  const {data}= await axios.put(`/api/shops/edit/${shop.id}`,shop)
+  return data
+}
+
+//delete a product
+const deleteProduct=async(id,thunkAPI)=>{
+   const state=thunkAPI.getState()
+   const userInfo=state.user.userLogin
+   const config={
+      headers:{
+         Authorization:`Bearer ${userInfo.token}`
+      }
+   }
+   await axios.delete(`/api/products/delete/${id}`,config)
+}
  
  const productService={
     listProducts,
@@ -76,7 +95,9 @@ const listShops=async()=>{
     productCreateReview,
     deleteReview,
     listShops,
-    listShopDetails
+    listShopDetails,
+    updateShop,
+    deleteProduct
  }
 
  export default productService

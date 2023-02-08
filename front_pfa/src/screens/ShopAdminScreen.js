@@ -1,11 +1,12 @@
 import React, { useEffect } from 'react'
-import { Col, ListGroup, Row } from 'react-bootstrap'
+import { Button, Col, Row } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { LinkContainer } from 'react-router-bootstrap'
 import Products from '../components/Products'
 import { getUserDetails } from '../features/user/userSlice'
 import { useParams } from 'react-router-dom'
-
+import { deleteProduct,reset5} from '../features/product/productSlice'
+import { toast } from 'react-toastify'
 
 
 const ShopAdminScreen = () => {
@@ -14,17 +15,32 @@ const ShopAdminScreen = () => {
   const {userLogin}=user
   const dispatch=useDispatch()
   const params=useParams()
-  
-console.log(userLogin)
+
   const {LoadingUserDetails,ErrorUserDetails,userDetails}=user.UserDetailsInfo
+
+  const product=useSelector(state=>state.product)
+  const {LoadingDelete,ErrorDelete,messageDelete,SuccessDelete}=product.deleteProductInfo
+  
 
   useEffect(()=>{
 
     if(userLogin)
     dispatch(getUserDetails(userLogin.id))
+    if(SuccessDelete)
+    {
+      toast.success("Product Deleted")
+      dispatch(reset5())
+    }
+    if(ErrorDelete){
+      toast.error("Error delete product !")
+      dispatch(reset5())
+    }
  
-},[dispatch,userLogin])
+},[dispatch,userLogin,SuccessDelete,ErrorDelete])
 
+const handlDelete=(productId)=>{
+  dispatch(deleteProduct(productId))
+ }
  
 
   return (
@@ -63,9 +79,10 @@ console.log(userLogin)
                         
         </Col >
         {userDetails && userDetails.shopDTO && userDetails.shopDTO.productsDto.map((product)=>(
-        <Col  key={product.id} sm={12} md={6} lg={4} xl={3}>
+        <Col className='productCont'  key={product.id} sm={12} md={6} lg={4} xl={3}>
+          <Button  className='deleteProductBtn' onClick={()=>handlDelete(product.id)}>  <i   className="fa-solid fa-trash del"></i></Button>
+          <Button  className='editProductBtn' onClick={()=>''}>  <i className="fa-solid fa-pen-to-square"></i></Button>
             <Products product={product}/>
-           
             </Col>
           ))}
          

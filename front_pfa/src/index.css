@@ -424,3 +424,28 @@ background-color: rgb(243, 243, 243);
   background: #2c3e50;
   border-radius: 10px;
 }
+.productCont {
+  position: relative;
+}
+.deleteProductBtn{
+  position: absolute;
+  color:  red !important;
+  background: none !important;
+  border: none !important;
+  padding: 0px !important;
+  top: 20px;
+  right: 20px;
+  z-index: 100;
+  font-size: 19px !important;
+}
+.editProductBtn{
+  position: absolute;
+  color:  green !important;
+  background: none !important;
+  border: none !important;
+  padding: 0px !important;
+  top: 20px;
+  right: 45px;
+  z-index: 100;
+  font-size: 19px !important;
+}

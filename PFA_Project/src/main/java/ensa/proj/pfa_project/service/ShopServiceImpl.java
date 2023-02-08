@@ -2,6 +2,7 @@ package ensa.proj.pfa_project.service;
 
 import ensa.proj.pfa_project.dtos.ShopDTO;
 import ensa.proj.pfa_project.dtos.UserDTO;
+import ensa.proj.pfa_project.entities.Role;
 import ensa.proj.pfa_project.entities.Shop;
 import ensa.proj.pfa_project.entities.User;
 import ensa.proj.pfa_project.mappers.ShopMapperImpl;
@@ -20,14 +21,16 @@ public class ShopServiceImpl implements ShopService{
 
     private ShopRepository shopRepository;
     private ShopMapperImpl shopMapper;
-    private UserMapperImpl userMapper;
+    private ProductService productService;
 
 
     private UserRepository userRepository;
     @Override
     public ShopDTO saveShop(ShopDTO shopDTO) {
         Shop shop=shopMapper.fromShopDTO(shopDTO);
-        System.out.println(shop);
+        User user=userRepository.findById(shopDTO.getUserId()).orElseThrow();
+        user.setRole(Role.ADMIN);
+        userRepository.save(user);
         shopRepository.save(shop);
         return shopMapper.fromShop(shop);
 
@@ -41,6 +44,22 @@ public class ShopServiceImpl implements ShopService{
     @Override
     public ShopDTO getShop(Long id) {
         return shopMapper.fromShop( shopRepository.findById(id).orElseThrow());
+    }
+
+    @Override
+    public ShopDTO editShop(Long id, String name, String description) {
+        Shop shop=shopRepository.findById(id).orElseThrow();
+        shop.setName(name);
+        shop.setDescription(description);
+        Shop s=shopRepository.save(shop);
+        return shopMapper.fromShop(s);
+    }
+
+    @Override
+    public void deleteShop(Long id) {
+        Shop shop=shopRepository.findById(id).orElseThrow();
+        shop.getProducts().forEach(p->productService.deleteProduct(p.getId()));
+        shopRepository.delete(shop);
     }
 
 

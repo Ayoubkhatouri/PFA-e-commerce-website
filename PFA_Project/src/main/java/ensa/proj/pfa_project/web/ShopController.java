@@ -4,6 +4,7 @@ import ensa.proj.pfa_project.dtos.ProductDTO;
 import ensa.proj.pfa_project.dtos.ShopDTO;
 import ensa.proj.pfa_project.dtos.UserDTO;
 import ensa.proj.pfa_project.service.ShopService;
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,7 +26,18 @@ public class ShopController {
         return shopService.getAllShops();
     }
     @GetMapping("/{id}")
-    public ShopDTO getAllShop(@PathVariable Long id){
+    public ShopDTO getShop(@PathVariable Long id){
         return shopService.getShop(id);
     }
+
+    @PutMapping("/edit/{id}")
+    public ShopDTO editShop(@PathVariable Long id,@RequestBody ShopEditRequest shopEditRequest){
+        return shopService.editShop(id,shopEditRequest.name,shopEditRequest.description);
+    }
+}
+
+@Data
+class ShopEditRequest{
+    String name;
+    String description;
 }

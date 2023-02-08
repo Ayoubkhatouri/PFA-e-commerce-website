@@ -1,10 +1,11 @@
 import React,{useEffect, useState} from 'react'
 import { Button,Form } from 'react-bootstrap'
-import {  Link } from 'react-router-dom'
+import {  Link, useNavigate } from 'react-router-dom'
 import FormContainer from '../components/FormContainer'
 import { useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { listShopDetails } from '../features/product/productSlice'
+import { listShopDetails,updateShop,reset4 } from '../features/product/productSlice'
+import { toast } from 'react-toastify'
 
 
 
@@ -13,10 +14,13 @@ const EditShopScreen = () => {
     const [description,setDescription]=useState("")
     const params=useParams()
     const dispatch=useDispatch()
+    const navigate=useNavigate()
 
     const product=useSelector(state=>state.product)
     
     const {isLoadingshop,isErrorshop,isSuccessshop,messageshop,shop}=product.shopDetails
+
+    const {Successupdate,Loadingupdate,Errorupdate,messageupdate}=product.updateShopInfo
 
     useEffect(()=>{
         dispatch(listShopDetails(params.id))
@@ -25,11 +29,21 @@ const EditShopScreen = () => {
             setName(shop?.name)
             setDescription(shop?.description)
         }
+        if(Successupdate){
+        toast.success("Shop Updated")
+        dispatch(reset4())
+        navigate(`/shop/admin/${params.id}`)
+        }
+        if(Errorupdate){
+        toast.success("Error Update Shop")
+        dispatch(reset4())
+        }
 
-    },[dispatch,params.id,isSuccessshop,shop?.name,shop?.description])
+    },[dispatch,params.id,isSuccessshop,shop?.name,shop?.description,Successupdate,navigate,Errorupdate])
 
     const submitHandler=(e)=>{
         e.preventDefault()
+        dispatch(updateShop({id:params.id,name,description}))
     }
 
   return (

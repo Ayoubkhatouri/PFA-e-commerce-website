@@ -23,6 +23,4 @@ public class Shop {
     private List<Product> products=new ArrayList<>();
 
 
-
-
 }

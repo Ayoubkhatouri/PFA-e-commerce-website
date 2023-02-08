@@ -22,6 +22,7 @@ public class ProductServiceImpl implements ProductService{
 
     private ProductRepository productRepository;
     private  ProductMapperImpl productMapper;
+    private ReviewRepository reviewRepository;
 
 
     @Override
@@ -42,5 +43,12 @@ public class ProductServiceImpl implements ProductService{
     @Override
     public ProductDTO getProduct(Long id) {
         return productMapper.fromProduct( productRepository.findProductById(id).orElseThrow());
+    }
+
+    @Override
+    public void deleteProduct(Long id) {
+        Product product=productRepository.findProductById(id).orElseThrow();
+        product.getReviews().forEach(r->reviewRepository.delete(r));
+        productRepository.delete(product);
     }
 }
