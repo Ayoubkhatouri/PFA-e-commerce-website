@@ -51,4 +51,18 @@ public class ProductServiceImpl implements ProductService{
         product.getReviews().forEach(r->reviewRepository.delete(r));
         productRepository.delete(product);
     }
+
+    @Override
+    public ProductDTO updateProduct(Long id, ProductDTO productDTO) {
+        Product product=productRepository.findProductById(id).orElseThrow();
+        product.setName(productDTO.getName());
+        product.setImage(productDTO.getImage());
+        product.setPrice(productDTO.getPrice());
+        product.setBrand(productDTO.getBrand());
+        product.setDescription(productDTO.getDescription());
+        product.setCategory(productDTO.getCategory());
+        product.setCountInStock(productDTO.getCountInStock());
+        productRepository.save(product);
+        return productMapper.fromProduct(product);
+    }
 }

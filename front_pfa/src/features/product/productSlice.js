@@ -69,6 +69,12 @@ const initialState={
         ErrorDelete:false,
         messageDelete:''
     },
+    updateProductInfo:{
+        Successupdate:false,
+        Loadingupdate:false,
+        Errorupdate:false,
+        messageupdate:''
+    },
 }
 
 //get all Products
@@ -162,7 +168,7 @@ export const listShopDetails=createAsyncThunk('shops/getOne',async(id,thunkAPI)=
 })
 
 //update a product
-export const updateShop=createAsyncThunk('product/update',async(shop,thunkAPI)=>{
+export const updateShop=createAsyncThunk('shop/update',async(shop,thunkAPI)=>{
     try {
        return  await productService.updateShop(shop)
     } catch (error) {
@@ -183,7 +189,16 @@ export const deleteProduct=createAsyncThunk('product/delete',async(id,thunkAPI)=
     }
 })
 
-
+//update a product
+export const updateProduct=createAsyncThunk('product/update',async(product,thunkAPI)=>{
+    try {
+       return  await productService.updateProduct(product,thunkAPI)
+    } catch (error) {
+        const message=(error.response &&  error.response.data && error.response.data.message) 
+        || error.message || error.toString()
+        return thunkAPI.rejectWithValue(message)
+    }
+})
 
 
 export const productSlice=createSlice({
@@ -240,7 +255,23 @@ export const productSlice=createSlice({
                 messagecreateShop:''
             }
         },
-
+        reset7:(state)=>{
+            state.updateProductInfo={
+                Successupdate:false,
+                Loadingupdate:false,
+                Errorupdate:false,
+                messageupdate:''
+            }
+        },
+        reset8:(state)=>{
+            state.productDetails={
+                product:[],
+        isError:false,
+        isSuccess:false,
+        isLoading:false,
+        message:''
+            }
+        },
     },
     
     extraReducers:(builder)=>{
@@ -388,8 +419,21 @@ export const productSlice=createSlice({
                     state.deleteProductInfo.ErrorDelete= true  
                     state.deleteProductInfo.messageDelete=action.payload 
             })
+
+            .addCase(updateProduct.pending,(state)=>{
+                state.updateProductInfo.Loadingupdate=true
+            })
+                .addCase(updateProduct.fulfilled,(state,action)=>{
+                state.updateProductInfo.Loadingupdate=false
+                state.updateProductInfo.Successupdate= true       
+            })
+                .addCase(updateProduct.rejected,(state,action)=>{
+                    state.updateProductInfo.Loadingupdate=false
+                    state.updateProductInfo.Errorupdate= true  
+                    state.updateProductInfo.messageupdate=action.payload 
+            })
     }
 })
 
-export const {reset,reset2,reset3,reset4,reset5}=productSlice.actions
+export const {reset,reset2,reset3,reset4,reset5,reset6,reset7,reset8}=productSlice.actions
 export default productSlice.reducer

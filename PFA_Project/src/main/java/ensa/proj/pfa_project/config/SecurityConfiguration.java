@@ -23,7 +23,7 @@ public class SecurityConfiguration {
         http
                 .csrf().disable()
                 .authorizeHttpRequests().requestMatchers("/api/users/auth/**").permitAll()
-                .requestMatchers("/api/products/delete/**","/api/products/create").hasAnyAuthority("ADMIN","SUPER_ADMIN")
+                .requestMatchers("/api/products/delete/**","/api/products/create","/api/products/update/**").hasAnyAuthority("ADMIN","SUPER_ADMIN")
                 .requestMatchers("/swagger-ui/**","/v3/api-docs/**","/api/users/**","/api/products/**","/api/reviews/**","/api/shops/**").permitAll()
                 .requestMatchers( HttpMethod.GET,"/api/v2/demo-controller2").hasAuthority("ADMIN")
 

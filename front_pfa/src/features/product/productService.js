@@ -21,6 +21,22 @@ const createProduct=async(product,thunkAPI)=>{
    const {data}= await axios.post(`/api/products/create`,product,config)
    return data
  }
+
+ //upadre a product
+const updateProduct=async(product,thunkAPI)=>{
+   //get user info
+   const state=thunkAPI.getState()
+   const userInfo=state.user.userLogin
+
+   const config={
+      headers:{
+         Authorization:`Bearer ${userInfo.token}`
+      }
+   }
+
+  const {data}= await axios.put(`/api/products/update/${product.id}`,product,config)
+  return data
+}
  
   //create a shop
 const createShop=async(shop)=>{
@@ -97,7 +113,8 @@ const deleteProduct=async(id,thunkAPI)=>{
     listShops,
     listShopDetails,
     updateShop,
-    deleteProduct
+    deleteProduct,
+    updateProduct
  }
 
  export default productService

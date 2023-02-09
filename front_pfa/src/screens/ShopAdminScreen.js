@@ -7,6 +7,7 @@ import { getUserDetails } from '../features/user/userSlice'
 import { useParams } from 'react-router-dom'
 import { deleteProduct,reset5} from '../features/product/productSlice'
 import { toast } from 'react-toastify'
+import { useNavigate } from 'react-router-dom'
 
 
 const ShopAdminScreen = () => {
@@ -15,6 +16,7 @@ const ShopAdminScreen = () => {
   const {userLogin}=user
   const dispatch=useDispatch()
   const params=useParams()
+  const navigate=useNavigate()
 
   const {LoadingUserDetails,ErrorUserDetails,userDetails}=user.UserDetailsInfo
 
@@ -41,7 +43,9 @@ const ShopAdminScreen = () => {
 const handlDelete=(productId)=>{
   dispatch(deleteProduct(productId))
  }
+
  
+
 
   return (
     <>
@@ -73,7 +77,7 @@ const handlDelete=(productId)=>{
             <li >Add Product</li>
             </LinkContainer>
             <li>Demandes Recus</li>
-            <li>Edit Products </li>
+          
             <li>Statistique</li>
           </ul>      
                         
@@ -81,7 +85,7 @@ const handlDelete=(productId)=>{
         {userDetails && userDetails.shopDTO && userDetails.shopDTO.productsDto.map((product)=>(
         <Col className='productCont'  key={product.id} sm={12} md={6} lg={4} xl={3}>
           <Button  className='deleteProductBtn' onClick={()=>handlDelete(product.id)}>  <i   className="fa-solid fa-trash del"></i></Button>
-          <Button  className='editProductBtn' onClick={()=>''}>  <i className="fa-solid fa-pen-to-square"></i></Button>
+          <Button  className='editProductBtn' onClick={()=>navigate(`/product/admin/edit/${product.id}`)}>  <i className="fa-solid fa-pen-to-square"></i></Button>
             <Products product={product}/>
             </Col>
           ))}
