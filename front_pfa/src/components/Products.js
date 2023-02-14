@@ -8,11 +8,11 @@ const Products = ({product}) => {
   
     <Card className='my-3 p-3 rounded'>
         <Link to={`/product/${product.id}`}>
-            <Card.Img src={product.image} variant='top'/>
+            <Card.Img className='imageProduct' src={product.image} variant='top'/>
         </Link>
         <Card.Body>
         <Link to={`/product/${product.id}`}>
-           <Card.Title as='div'><strong>{product.name}</strong></Card.Title>
+           <Card.Title as='div' className='OneLine'><strong>{product.name}</strong></Card.Title>
         </Link>
         <Card.Text as='h6'>
            <strong> Category: {product.category}</strong>

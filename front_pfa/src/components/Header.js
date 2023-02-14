@@ -1,10 +1,10 @@
 import React,{useContext, useEffect} from 'react'
-import {  useNavigate } from 'react-router-dom'
+import {  useNavigate, useParams } from 'react-router-dom'
 import { Navbar,Nav,NavDropdown, Button } from 'react-bootstrap'
 import { LinkContainer} from 'react-router-bootstrap'
 import { useSelector,useDispatch } from 'react-redux'
 import context1 from '../context1'
-import { getUserDetails } from '../features/user/userSlice'
+import { getUserDetails,addUserLogin } from '../features/user/userSlice'
 
 
 const Header = () => {
@@ -13,19 +13,22 @@ const Header = () => {
   const {isEn,setIsEn}=useContext(context1)
   const navigate=useNavigate()
   const dispatch=useDispatch()
+  
 
  const user=useSelector(state=>state.user)
-  const {userLogin}=user
+const userLogin=user.userLogin
 
   const {LoadingUserDetails,ErrorUserDetails,userDetails}=user.UserDetailsInfo
  
-  
+  const userLocalStorage=JSON.parse(localStorage.getItem('userLogin'))
   useEffect(()=>{
     
-    if(userLogin)
-    dispatch(getUserDetails(userLogin.id))
+    if(userLocalStorage)
+    dispatch(getUserDetails(userLocalStorage.id))
+    if(userLocalStorage?.id !==userLogin?.id)
+    dispatch(addUserLogin())
 
-},[dispatch,userLogin])
+},[dispatch,userLogin?.id])
 
   const logoutHandler=()=>{
     localStorage.removeItem('userLogin')
@@ -63,36 +66,16 @@ const Header = () => {
        </LinkContainer>
            }
                 
-                {((userLogin && userLogin.roles && userLogin.roles.includes("Proprietaire")) /*|| userDetails.isAgence*/)&&  (
-                  <>
-                  <LinkContainer to={`users/demandes/recus`} >
-                  <NavDropdown.Item>{isEn ? "Demands Received":"Demandes Reçus"}</NavDropdown.Item>
-                </LinkContainer>
-                <LinkContainer to='/voiture/ajouterVoiture'>
-                 <NavDropdown.Item>{isEn ? "Add Car":"Ajouter Voiture"}</NavDropdown.Item>
-               </LinkContainer>
-                 <LinkContainer to='/voiture/Voitures'>
-                 <NavDropdown.Item>{isEn ? "Cars":"Voitures"}</NavDropdown.Item>
-                 </LinkContainer>
-                 <LinkContainer to='/voiture/Voitures/offreSpecial'>
-                 <NavDropdown.Item>{isEn ? "Special Offers Management":"Gestion Offres Special"}</NavDropdown.Item>
-                 </LinkContainer>
                  
-                 {userLogin && userLogin.roles && userLogin.roles.includes("Admin") && (
-                  <>
+                 {userLogin && userLogin.role==="SUPER_ADMIN"&& (
+              
                   <LinkContainer to='/users/all'>
                    <NavDropdown.Item>{isEn ? "Users":"Utilisateurs"}</NavDropdown.Item>
                  </LinkContainer>
-                   <LinkContainer to='admin/marqueModel'>
-                   <NavDropdown.Item>{isEn ? "Brand/Model Management":"Gestion Marque/Modèle"}</NavDropdown.Item>
-                  </LinkContainer>
-                  </>
-                 )}
                 
-               </>
-               )}
+                 )}
                 </NavDropdown>
-
+             
          <Nav.Link className='signIn navItems abb'  onClick={logoutHandler} style={{color:'gold'}}><span className='hoverMe'><i className='fa-solid fa-arrow-right-from-bracket'></i>{isEn ? "Logout":"Se Déconnecter"} </span></Nav.Link>
              </>
            ) :(

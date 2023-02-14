@@ -11,6 +11,7 @@ import ensa.proj.pfa_project.repositories.ReviewRepository;
 import ensa.proj.pfa_project.repositories.UserRepository;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -55,13 +56,8 @@ public class ProductServiceImpl implements ProductService{
     @Override
     public ProductDTO updateProduct(Long id, ProductDTO productDTO) {
         Product product=productRepository.findProductById(id).orElseThrow();
-        product.setName(productDTO.getName());
-        product.setImage(productDTO.getImage());
-        product.setPrice(productDTO.getPrice());
-        product.setBrand(productDTO.getBrand());
-        product.setDescription(productDTO.getDescription());
-        product.setCategory(productDTO.getCategory());
-        product.setCountInStock(productDTO.getCountInStock());
+
+        BeanUtils.copyProperties(productDTO,product);
         productRepository.save(product);
         return productMapper.fromProduct(product);
     }

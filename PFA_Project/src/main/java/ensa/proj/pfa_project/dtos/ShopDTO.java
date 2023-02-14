@@ -3,6 +3,7 @@ package ensa.proj.pfa_project.dtos;
 import ensa.proj.pfa_project.entities.Product;
 import lombok.Data;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -14,4 +15,5 @@ public class ShopDTO {
     private Long userId;
     private String OwnerFirstName;
     private String OwnerLastName;
+    private List<OrderDTO> orderDTOS;
 }

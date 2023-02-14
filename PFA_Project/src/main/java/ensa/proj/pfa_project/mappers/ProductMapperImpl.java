@@ -16,12 +16,14 @@ public class ProductMapperImpl {
 
     private final ShopRepository shopRepository;
     private final ReviewMapperImpl reviewMapper;
+    private final OrderMapperImpl orderMapper;
 
     public ProductDTO fromProduct(Product product){
         ProductDTO productDTO=new ProductDTO();
         BeanUtils.copyProperties(product,productDTO);
         productDTO.setShopId(shopRepository.findById(product.getShop().getId()).orElseThrow().getId());
         productDTO.setReviewDTOS(product.getReviews().stream().map(r->reviewMapper.fromReview(r)).collect(Collectors.toList()));
+        //productDTO.setOrderDTOS(product.getOrders().stream().map(o->orderMapper.fromOrder(o)).collect(Collectors.toList()));
         return productDTO;
     }
     public Product fromProductDTO(ProductDTO productDTO){
@@ -29,6 +31,7 @@ public class ProductMapperImpl {
         BeanUtils.copyProperties(productDTO,product);
         product.setShop(shopRepository.findById(productDTO.getShopId()).orElseThrow());
         product.setReviews(productDTO.getReviewDTOS().stream().map(r->reviewMapper.fromReviewDTO(r)).collect(Collectors.toList()));
+       // product.setOrders(productDTO.getOrderDTOS().stream().map(o->orderMapper.fromOrderDTO(o)).collect(Collectors.toList()));
         return product;
     }
 }

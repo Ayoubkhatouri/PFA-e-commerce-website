@@ -20,6 +20,11 @@ import ProductScreen from './screens/ProductScreens';
 import ShopUserScreen from './screens/shopUserScreen';
 import EditShopScreen from './screens/EditShopScreen';
 import EditProductScreen from './screens/EditProductScreen';
+import ProfileScreen from './screens/ProfileScreen';
+import ListAllUsersScreen from './screens/ListAllUsersScreen';
+import UserUpdateByAdminScreen from './screens/UserUpdateByAdminScreen';
+import ReceivedDemandesScreen from './screens/ReceivedDemandesScreen';
+
 
 
 function App() {
@@ -45,6 +50,10 @@ function App() {
       <Route path="/shop/:id" element={<ShopUserScreen/>}/>
       <Route path="/shop/admin/edit/:id" element={<EditShopScreen/>}/>
       <Route path="/product/admin/edit/:id" element={<EditProductScreen/>}/>
+      <Route path='/users/profile' element={<ProfileScreen/>}/>
+      <Route path='/users/all' element={<ListAllUsersScreen/>}/>
+      <Route path='/admin/users/modifier/:id' element={<UserUpdateByAdminScreen />}/>
+      <Route path='/admin/orders/received/:id' element={<ReceivedDemandesScreen />}/>
       </Routes>
       </Container>
       </main>

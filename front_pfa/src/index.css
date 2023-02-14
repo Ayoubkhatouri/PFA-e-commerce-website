@@ -372,7 +372,7 @@ background-color: rgb(243, 243, 243);
 }
 .imageCarousel{
   height: 450px !important;
-  width: 700px !important;
+  width: 750px !important;
   
 }
 .shop{
@@ -448,4 +448,23 @@ background-color: rgb(243, 243, 243);
   right: 45px;
   z-index: 100;
   font-size: 19px !important;
+}
+
+.styleBtn{
+ 
+  background: none !important;
+  border: none !important;
+  padding: 0px !important;
+  font-size: 17px !important
+}
+.OneLine{
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1; 
+}
+.imageProduct{
+  height: 208px !important;
 }

@@ -27,6 +27,7 @@ public class ShopMapperImpl {
         shopDTO.setOwnerFirstName(user.getFirstname());
         shopDTO.setOwnerLastName(user.getLastname());
         shopDTO.setProductsDto(shop.getProducts().stream().map(p->productMapper.fromProduct(p)).collect(Collectors.toList()));
+
         return shopDTO;
     }
 

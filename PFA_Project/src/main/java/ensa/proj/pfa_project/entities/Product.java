@@ -30,4 +30,5 @@ public class Product {
     private int countInStock;
     @ManyToOne
     private Shop shop;
+
 }

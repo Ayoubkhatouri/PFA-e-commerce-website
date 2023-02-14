@@ -8,11 +8,13 @@ import { listProductDetails ,productCreateReview,deleteReview,reset2,reset3,list
 import Message from '../components/Message'
 import {toast} from 'react-toastify'
 import Products from '../components/Products'
-
+import { createOrder,reset } from '../features/order/orderSlice'
+import { getUserDetails } from '../features/user/userSlice'
 
 
 const ProductScreen = () => {
     const [qty,setQty]=useState(1)
+    const [inStock,setInStock]=useState(0)
     const [rating,setRating]=useState(0)
     const [comment,setComment]=useState('')
 
@@ -26,23 +28,27 @@ const ProductScreen = () => {
     const navigate=useNavigate()
 
     const product=useSelector(state=>state.product)
-    
+    const order=useSelector(state=>state.order)
     const {isLoading,isError,message,productDetails}=product 
     const {products}=product.productsDetails
-    
+    const user=useSelector(state=>state.user)
+    const {userLogin}=user 
 
     const {Successcreate,Loadingcreate,Errorcreate,messageErrorcreate}=product.createReviewInfo
     const {Successdelete,Loadingdelete,Errordelete,messageErrordelete}=product.deleteReviewInfo
+    const {LoadingcreateOrder,ErrorcreateOrder,SuccesscreateOrder,createdProduct}=order.createOrderInfo
+    const {LoadingUserDetails,ErrorUserDetails,userDetails}=user.UserDetailsInfo
 
     let productSameCategory=products.filter(p=>p.category===productDetails.product.category && p.id!==productDetails.product.id)
     
 
-    const user=useSelector(state=>state.user)
-    const {userLogin}=user 
+
    
     const params = useParams()
 
     useEffect(() => {
+        if(userLogin)
+        dispatch(getUserDetails(userLogin.id))
         if(Successcreate){
             toast.success('Review Submited !')
             setRating(0)
@@ -53,10 +59,16 @@ const ProductScreen = () => {
             toast.success('Review Deleted !')
             dispatch(reset3())
         }
+        if(SuccesscreateOrder){
+            toast.success('Order Added')
+            dispatch(reset())
+            setQty(1)
+        }
         dispatch(listProductDetails(params.id))
+        setInStock(productDetails?.product?.countInStock)
         
 
-    }, [dispatch,params.id,Successcreate,Successdelete])
+    }, [dispatch,params.id,Successcreate,Successdelete,SuccesscreateOrder,userLogin,productDetails.product.countInStock])
 
     useEffect(()=>{
         dispatch(listProducts())
@@ -64,7 +76,16 @@ const ProductScreen = () => {
 
 
     const addtoCartHandler=()=>{
-        navigate(`/cart/${params.id}?qty=${qty}`)
+     dispatch(createOrder({
+        shopId:productDetails.product.shopId,
+        totalePrice:qty*productDetails.product.price,
+        qty,
+        ownerFirstName:userLogin.firstname,
+        ownerLastName:userLogin.lastname,
+        userId:userLogin.id,
+        productName:productDetails.product.name,
+        productId:productDetails.product.id
+     }))
     }
 
     const sumbmitHandler=(e)=>{
@@ -135,11 +156,12 @@ const ProductScreen = () => {
                                         Status:
                                     </Col>
                                     <Col>
-                                        {productDetails.product.countInStock > 0 ? 'In Stock' : 'Out of Stock '}
+                                        {productDetails.product.countInStock > 0 ? 'In Stock ('+inStock+')' : 'Out of Stock '}
                                     </Col>
                                 </Row>
                             </ListGroupItem>
-                            {productDetails.product.countInStock >0 && (
+                      
+                            {productDetails.product.countInStock >0 && userDetails?.shopDTO?.id!==productDetails?.product.shopId  && (
                                 <ListGroupItem >
                                     <Row>
                                         <Col>Qty</Col>
@@ -162,11 +184,13 @@ const ProductScreen = () => {
                                     </Row>
                                 </ListGroupItem>
                             )}
-
+                            {userDetails?.shopDTO?.id!==productDetails?.product.shopId &&(
                             <ListGroupItem>
-                                <Button onClick={addtoCartHandler} className='btn-block ' type='button' disabled={productDetails.countInStock === 0}>Add To Cart</Button>
+                                <Button onClick={addtoCartHandler} className='btn-block ' type='button' disabled={productDetails.product.countInStock === 0 }>Commander</Button>
                             </ListGroupItem>
+                        )}
                         </ListGroup>
+                        
                     </Card>
                 </Col>
             </Row>

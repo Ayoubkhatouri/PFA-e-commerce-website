@@ -20,7 +20,7 @@ const HomeScreen = () => {
    const {shops}=productList.shopsDetails
 
   useEffect(()=>{
-   
+    
     dispatch(listProducts()) 
     dispatch(listShops()) 
 

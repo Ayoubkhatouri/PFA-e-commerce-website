@@ -2,6 +2,7 @@ package ensa.proj.pfa_project.dtos;
 
 import lombok.Data;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -18,4 +19,5 @@ public class ProductDTO {
     private double price;
     private int countInStock;
     private Long ShopId;
+
 }
