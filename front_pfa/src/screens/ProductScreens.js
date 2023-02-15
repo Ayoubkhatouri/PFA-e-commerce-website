@@ -36,7 +36,7 @@ const ProductScreen = () => {
 
     const {Successcreate,Loadingcreate,Errorcreate,messageErrorcreate}=product.createReviewInfo
     const {Successdelete,Loadingdelete,Errordelete,messageErrordelete}=product.deleteReviewInfo
-    const {LoadingcreateOrder,ErrorcreateOrder,SuccesscreateOrder,createdProduct}=order.createOrderInfo
+    const {LoadingcreateOrder,ErrorcreateOrder,SuccesscreateOrder}=order.createOrderInfo
     const {LoadingUserDetails,ErrorUserDetails,userDetails}=user.UserDetailsInfo
 
     let productSameCategory=products.filter(p=>p.category===productDetails.product.category && p.id!==productDetails.product.id)

@@ -57,6 +57,9 @@ const userLogin=user.userLogin
                 <LinkContainer to={`users/profile`} >
                   <NavDropdown.Item>{isEn ? "Profil":"Profile"}</NavDropdown.Item>
                 </LinkContainer>
+                <LinkContainer to={`users/SentOrders`} >
+                  <NavDropdown.Item>{isEn ? "Sent Orders":"Commandes Envoyé"}</NavDropdown.Item>
+                </LinkContainer>
            {userDetails.shopDTO ?
            <LinkContainer to={`shop/admin/${userDetails.shopDTO.id}`} >
            <NavDropdown.Item>{isEn ? "Your Shop":"Votre Boutique"} </NavDropdown.Item>

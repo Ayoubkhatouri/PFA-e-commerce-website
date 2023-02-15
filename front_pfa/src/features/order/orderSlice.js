@@ -10,11 +10,18 @@ const initialState={
         messagecreateOrder:''
     },
     getAllShopOrdersReceivedInfo:{
-        AllShopOrders:[],
+        AllShopOrders:[],   
         LoadinggetAllShopReceivedOrders:false,
         ErrorgetAllShopReceivedOrders:false,
         messagegetAllShopReceivedOrders:'',
         SuccessgetAllShopReceivedOrders:false
+    },
+    updateOrderInfo:{
+        updatedOrder: {},
+        SuccessupdateOrder:false,
+        LoadingupdateOrder:false,
+        ErrorupdateOrder:false,
+        messageupdateOrder:''
     },
 }
 
@@ -40,6 +47,16 @@ export const getAllShopOrders=createAsyncThunk("/demande/getAll",async(shopId,th
     }
 })
 
+//update a order
+export const updateOrder=createAsyncThunk('order/update',async(orderIdAndstatus,thunkAPI)=>{
+    try {
+       return  await orderService.updateOrder(orderIdAndstatus)
+    } catch (error) {
+        const message=(error.response &&  error.response.data && error.response.data.message) 
+        || error.message || error.toString()
+        return thunkAPI.rejectWithValue(message)
+    }
+})
 
 
 export const orderSlice=createSlice({
@@ -54,7 +71,17 @@ export const orderSlice=createSlice({
                 ErrorcreateOrder:false,
                 messagecreateOrder:''
             }
+        },
+        reset1:(state)=>{
+            state.updateOrderInfo={
+                updatedProduct: {},
+                SuccessupdateOrder:false,
+                LoadingupdateOrder:false,
+                ErrorupdateOrder:false,
+                messageupdateOrder:''
+            }
         }
+
     },
     extraReducers:(builder)=>{
         builder
@@ -86,8 +113,23 @@ export const orderSlice=createSlice({
         state.getAllShopOrdersReceivedInfo.ErrorgetAllShopReceivedOrders= true  
         state.getAllShopOrdersReceivedInfo.messagegetAllShopReceivedOrders=action.payload 
 })
+////////////////////////////////////////
+.addCase(updateOrder.pending,(state)=>{
+    state.updateOrderInfo.LoadingupdateOrder=true
+})
+    .addCase(updateOrder.fulfilled,(state,action)=>{
+    state.updateOrderInfo.LoadingupdateOrder=false
+    state.updateOrderInfo.SuccessupdateOrder= true       
+    state.updateOrderInfo.updatedProduct=action.payload
+})
+    .addCase(updateOrder.rejected,(state,action)=>{
+        state.updateOrderInfo.LoadingupdateOrder=false
+        state.updateOrderInfo.ErrorupdateOrder= true  
+        state.updateOrderInfo.messageupdateOrder=action.payload 
+})
+
     }
 })
 
-export const {reset}=orderSlice.actions
+export const {reset,reset1}=orderSlice.actions
 export default orderSlice.reducer

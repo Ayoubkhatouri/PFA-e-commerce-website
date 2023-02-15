@@ -37,4 +37,19 @@ public class OrderServiceImpl implements OrderService{
        List<OrderDTO> orderDTOS=orders.stream().map(o->orderMapper.fromOrder(o)).collect(Collectors.toList());
         return orderDTOS;
     }
+
+    @Override
+    public OrderDTO updateOrder(Long id, Status status) {
+        System.out.println("----------- "+status);
+        Order order=orderRepository.findById(id).orElseThrow();
+
+        if(status==Status.Refused){
+            Product product=productRepository.findById(order.getProductId()).orElseThrow();
+            product.setCountInStock(product.getCountInStock()+order.getQty());
+            productRepository.save(product);
+        }
+        order.setStatus(status);
+        orderRepository.save(order);
+        return orderMapper.fromOrder(order);
+    }
 }

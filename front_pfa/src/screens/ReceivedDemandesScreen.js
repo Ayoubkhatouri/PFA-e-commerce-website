@@ -5,10 +5,12 @@ import { LinkContainer } from "react-router-bootstrap"
 import {Table,Button} from 'react-bootstrap'
 import { useDispatch,useSelector } from 'react-redux'
 import Message from '../components/Message'
-import { getAllShopOrders} from '../features/order/orderSlice'
+import { getAllShopOrders,updateOrder,reset1} from '../features/order/orderSlice'
 import Spinner from '../components/Spinner'
 import context1 from '../context1'
 import { getUserDetails } from '../features/user/userSlice'
+import { toast } from 'react-toastify'
+
 
 
 
@@ -18,56 +20,48 @@ const ReceivedDemandesScreen = () => {
     const {isEn}=useContext(context1);
   const order=useSelector(state=>state.order)
   const {AllShopOrders,SuccessgetAllShopReceivedOrders,LoadinggetAllShopReceivedOrders,ErrorgetAllShopReceivedOrders,messagegetAllShopOrdersReceive}=order.getAllShopOrdersReceivedInfo
-
+  const {LoadingupdateOrder,ErrorupdateOrder,SuccessupdateOrder}=order.updateOrderInfo
 
   const user=useSelector(state=>state.user)
   const {userLogin}=user
-  const {LoadinggetAllShopOrdersReceive,ErrorgetAllShopOrdersReceive,userDetails}=user.UserDetailsInfo
+  const {userDetails}=user.UserDetailsInfo
   
   useEffect(()=>{
     dispatch(getUserDetails(userLogin?.id))
 dispatch(getAllShopOrders(params.id))
-
+    if(SuccessupdateOrder){
+        dispatch(getAllShopOrders(params.id))
+        dispatch(reset1())
+        toast.success("Order Updated")
+    }
+    if(ErrorupdateOrder){
+        dispatch(reset1())
+        toast.error("Error !!")
+    }
     
-   },[dispatch,userLogin?.id,userDetails?.shopDTO?.id])
+   },[dispatch,userLogin?.id,params.id,SuccessupdateOrder,ErrorupdateOrder])
 
-   const confirmerHndler=(dem)=>{
+   const confirmerHndler=(orderId)=>{
 alert("Vous etes sur de confirmer cette demande ?")
-    /*    dispatch(updateDemande({
-        id:dem.id,
-        locataireId:dem.locataireId,
-        voitureId:dem.voitureId,
-        dateDebut:dem.dateDebut,
-        dateFin:dem.dateFin,
-        prixTotal:dem.prixTotal,
-        statut:"Accepter"
-        }))
-       */
+    dispatch(updateOrder({orderId,status1:  "Accepted"}))
+   
    }
   
-   const rejectHandler=(dem)=>{
+   const rejectHandler=(orderId)=>{
     alert("Vous etes sur de rejeter cette demande ?")
-    /*dispatch(updateDemande({
-        id:dem.id,
-        locataireId:dem.locataireId,
-        voitureId:dem.voitureId,
-        dateDebut:dem.dateDebut,
-        dateFin:dem.dateFin,
-        prixTotal:dem.prixTotal,
-        statut:"Rejeter"
-        }))*/
-      
+    dispatch(updateOrder({orderId,status1:"Refused"}))
+  
    }
 
 
   return (
     <div> 
-           <Link to={`/shop/admin/${userDetails.shopDTO.id}`} className='btn btn-light my-3'>{isEn ? "Return":'Revenir'}</Link>
+           <Link to={`/shop/admin/${userDetails.shopDTO?.id}`} className='btn btn-light my-3'>{isEn ? "Return":'Revenir'}</Link>
         {AllShopOrders.length === 0 ? <h1>{isEn ? "No Received Demands":"Vous N'avez Recus Aucune Demandes"}</h1> : (
             <>
   <h1 className='addLine mb-5 mt-3'>{isEn ? "Received Demands":'Demandes Recus'}</h1>
   {/*Errordelete && <Message variant='danger'>{messagedelete}</Message>*/}
-  {LoadinggetAllShopOrdersReceive ? <Spinner/> : ErrorgetAllShopOrdersReceive ? <Message variant='danger'>{messagegetAllShopOrdersReceive}</Message> : (
+  {LoadinggetAllShopReceivedOrders ? <Spinner/> : ErrorgetAllShopReceivedOrders ? <Message variant='danger'>{messagegetAllShopOrdersReceive}</Message> : (
       <Table striped bordered="true" hover responsive className='table-sm'>
           <thead>
               <tr>
@@ -84,8 +78,8 @@ alert("Vous etes sur de confirmer cette demande ?")
               </tr>
           </thead>
           <tbody>
-              {AllShopOrders.map((order)=>(
-                  <tr key={order.id}>
+              {AllShopOrders?.map((order)=>(
+                  <tr key={order?.id}>
                         <td>{order.productName}</td>
                         <td>{order.totalePrice}</td>
                         <td>{order.qty}</td>
@@ -93,11 +87,11 @@ alert("Vous etes sur de confirmer cette demande ?")
                       <td>{order.ownerLastName}  {order.ownerFirstName}</td>
                   
                       <td>
-                      <Button variant='success'  className='mx-2 mt-1 styleBtn' onClick={()=>confirmerHndler(order)}>
+                      <Button disabled={order.status==="Accepted" ||order.status==="Refused"} variant='success'  className='mx-2 mt-1 styleBtn' onClick={()=>confirmerHndler(order?.id)}>
                           <i className="fa-solid fa-check" style={{color:'green'}}></i>
                           </Button>
                      
-                      <Button variant='danger'  className='styleBtn mx-2 mt-1' onClick={()=>rejectHandler(order)}>
+                      <Button disabled={order.status==="Accepted" ||order.status==="Refused"} variant='danger'  className='styleBtn mx-2 mt-1' onClick={()=>rejectHandler(order?.id)}>
                         <i className="fa-solid fa-xmark" style={{color:'red'}}></i>
                           </Button>
                       </td>

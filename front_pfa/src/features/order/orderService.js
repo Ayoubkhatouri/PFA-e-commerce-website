@@ -13,8 +13,16 @@ import axios from "axios";
     return data
  }
 
+ //update order
+ const updateOrder=async(orderIdAndstatus)=>{
+   console.log(orderIdAndstatus)
+   const {data}=await axios.put(`/api/orders/update/${orderIdAndstatus.orderId}?status=${orderIdAndstatus.status1}`)
+   return data
+ }
+
 const orderService={
     createOrder,
-    getAllShopOrders
+    getAllShopOrders,
+    updateOrder
 }
 export default orderService
