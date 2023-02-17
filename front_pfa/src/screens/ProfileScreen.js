@@ -5,7 +5,7 @@ import {LinkContainer} from 'react-router-bootstrap'
 import {useDispatch, useSelector } from 'react-redux'
 import Message from '../components/Message'
 import Spinner from '../components/Spinner'
-import { getUserDetails,updateUser,reset } from '../features/user/userSlice'
+import { getUserDetails,updateUser,reset2 } from '../features/user/userSlice'
 import { toast } from 'react-toastify'
 
 
@@ -29,7 +29,7 @@ import { toast } from 'react-toastify'
     const [telephone,setTelephone]=useState("")
     const [ville,setVille]=useState("")
     const [adresse,setAdresse]=useState("")
-
+    const [role,setRole]=useState("")
     
     
 
@@ -45,21 +45,27 @@ import { toast } from 'react-toastify'
         setTelephone(userDetails.tele)
         setVille(userDetails.ville)
         setAdresse(userDetails.adresse)
+        setRole(userDetails.role)
     }
     if(isSuccessUpdate){
         toast.success("User updated")
+        dispatch(getUserDetails(userLogin.id))
+        
+        dispatch(reset2())
         navigate("/")
 
     }    
-    if(isErrorUpdate)
+    if(isErrorUpdate){
     toast.error("Error Updating User")
+    dispatch(reset2())
+    }
     
-    },[isSuccessUpdate,isErrorUpdate,dispatch,userLogin,userLogin.userId,navigate,userDetails.email,userDetails.ville,userDetails.tele,userDetails.adresse,userDetails.lastname,userDetails.firstname])
+    },[userDetails.role,isSuccessUpdate,isErrorUpdate,dispatch,userLogin,userLogin.userId,navigate,userDetails.email,userDetails.ville,userDetails.tele,userDetails.adresse,userDetails.lastname,userDetails.firstname])
 
 const submitHandler=(e)=>{
     e.preventDefault()
     let id=userDetails.id
- dispatch(updateUser({id,lastname:nom,firstname:prenom,email,tele:telephone,ville,adresse}))
+ dispatch(updateUser({id,lastname:nom,firstname:prenom,email,tele:telephone,ville,adresse,role}))
 
 
  }
@@ -69,7 +75,7 @@ const submitHandler=(e)=>{
 
   return <Row>
     <Col >
-    <h2  className='addLine mb-5 mt-3 '>{userLogin.userName} Profile </h2>
+    <h2  className='addLine mb-5 mt-3 '>{userLogin.firstname} Profile </h2>
 
       
         <Form onSubmit={submitHandler}>

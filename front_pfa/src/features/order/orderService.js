@@ -20,9 +20,24 @@ import axios from "axios";
    return data
  }
 
+  // get all orders of a user
+  const getAllUserOrders=async(userId)=>{
+    const {data}=await axios.get(`/api/orders/byUser/${userId}`)
+    return data
+ }
+
+   // delete Order
+   const deleteOrder=async(orderId)=>{
+    const {data}=await axios.delete(`/api/orders/delete/${orderId}`)
+    return data
+ }
+
+
 const orderService={
     createOrder,
     getAllShopOrders,
-    updateOrder
+    updateOrder,
+    getAllUserOrders,
+    deleteOrder
 }
 export default orderService

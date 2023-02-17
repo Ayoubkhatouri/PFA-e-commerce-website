@@ -79,7 +79,9 @@ const handlDelete=(productId)=>{
             <LinkContainer to={`/admin/orders/received/${params.id}`}>
             <li>Demandes Recus</li>
             </LinkContainer>
+            <LinkContainer to={`/admin/orders/statisques/${params.id}`}>
             <li>Statistique</li>
+            </LinkContainer>
           </ul>      
                         
         </Col >

@@ -468,3 +468,29 @@ background-color: rgb(243, 243, 243);
 .imageProduct{
   height: 208px !important;
 }
+
+.aa{
+  margin-left: 5px;
+}
+
+.myDivSearch{
+  margin-top: 35px;
+display: flex;
+justify-content: space-between;
+flex-direction: row;
+flex-wrap: wrap;
+}
+.hh{
+  flex-grow: 0.9999;
+}
+.myInputSearch{
+  display: flex;
+  margin-left: auto;
+}
+.bottomMe{
+  top: 20%;
+  left: 0;
+  position: relative;
+border: 1px solid #2c3e50;
+border-radius: 20%;
+}

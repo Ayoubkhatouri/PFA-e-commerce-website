@@ -24,6 +24,8 @@ import ProfileScreen from './screens/ProfileScreen';
 import ListAllUsersScreen from './screens/ListAllUsersScreen';
 import UserUpdateByAdminScreen from './screens/UserUpdateByAdminScreen';
 import ReceivedDemandesScreen from './screens/ReceivedDemandesScreen';
+import DemandeMadeByUserScreen from './screens/DemandeMadeByUserScreen';
+
 
 
 
@@ -54,6 +56,8 @@ function App() {
       <Route path='/users/all' element={<ListAllUsersScreen/>}/>
       <Route path='/admin/users/modifier/:id' element={<UserUpdateByAdminScreen />}/>
       <Route path='/admin/orders/received/:id' element={<ReceivedDemandesScreen />}/>
+      <Route path='/users/SentOrders' element={<DemandeMadeByUserScreen />}/>
+     
       </Routes>
       </Container>
       </main>

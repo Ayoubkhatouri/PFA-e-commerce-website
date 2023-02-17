@@ -20,7 +20,7 @@ public class UserController {
     private final UserService userService;
     private final UserMapperImpl userMapper;
 
-    @GetMapping("/getAll")
+    @GetMapping("/supadmin/getAll")
     public List<UserDTO> getAll(){
         return  userService.allUsers();
     }
@@ -32,7 +32,7 @@ public class UserController {
     public UserDTO findUserAdmin(@PathVariable Long userId){
         return userMapper.fromUser( userService.findUser(userId));
     }
-    @DeleteMapping("delete/{id}")
+    @DeleteMapping("/supadmin/delete/{id}")
     public void deleteUser(@PathVariable Long id){
         userService.deleteUser(id);
     }

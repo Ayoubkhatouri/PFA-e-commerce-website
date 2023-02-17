@@ -29,4 +29,12 @@ public class OrderController {
     public OrderDTO updateOrder(@PathVariable Long id, @RequestParam  Status status){
         return orderService.updateOrder(id, status);
     }
+    @GetMapping("/byUser/{userId}")
+    public List<OrderDTO> AllOrderByUser(@PathVariable Long userId){
+        return orderService.findOrdersOfUser(userId);
+    }
+    @DeleteMapping("/delete/{orderId}")
+    public  void DeleteOrder(@PathVariable Long orderId){
+        orderService.deleteOrder(orderId);
+    }
 }

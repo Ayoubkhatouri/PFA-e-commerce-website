@@ -18,7 +18,10 @@ const Header = () => {
  const user=useSelector(state=>state.user)
 const userLogin=user.userLogin
 
-  const {LoadingUserDetails,ErrorUserDetails,userDetails}=user.UserDetailsInfo
+  const {LoadinggetUserDetails,ErrorgetUserDetails,userDetails}=user.UserDetailsInfo
+
+
+
  
   const userLocalStorage=JSON.parse(localStorage.getItem('userLogin'))
   useEffect(()=>{
@@ -27,8 +30,10 @@ const userLogin=user.userLogin
     dispatch(getUserDetails(userLocalStorage.id))
     if(userLocalStorage?.id !==userLogin?.id)
     dispatch(addUserLogin())
+  
+   
 
-},[dispatch,userLogin?.id])
+},[dispatch,userLogin?.id ])
 
   const logoutHandler=()=>{
     localStorage.removeItem('userLogin')
@@ -58,7 +63,7 @@ const userLogin=user.userLogin
                   <NavDropdown.Item>{isEn ? "Profil":"Profile"}</NavDropdown.Item>
                 </LinkContainer>
                 <LinkContainer to={`users/SentOrders`} >
-                  <NavDropdown.Item>{isEn ? "Sent Orders":"Commandes Envoyé"}</NavDropdown.Item>
+                  <NavDropdown.Item>{isEn ? "Sent Orders":"Demandes Envoyé"}</NavDropdown.Item>
                 </LinkContainer>
            {userDetails.shopDTO ?
            <LinkContainer to={`shop/admin/${userDetails.shopDTO.id}`} >

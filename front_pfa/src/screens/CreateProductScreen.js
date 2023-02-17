@@ -1,4 +1,4 @@
-import React,{useState,useEffect} from 'react'
+import React,{useState,useEffect, useContext} from 'react'
 import { Link, useNavigate, useLocation ,useParams} from "react-router-dom"
 import {Form ,Button, Spinner} from 'react-bootstrap'
 import { useDispatch,useSelector } from 'react-redux'
@@ -7,10 +7,10 @@ import { createProduct,reset} from '../features/product/productSlice'
 import Loader from '../components/Loader'
 import { toast } from 'react-toastify'
 import { getUserDetails } from '../features/user/userSlice'
-
+import context1 from '../context1'
 
  const CreateProductScreen  = () => {
-
+    const {isEn,setIsEn}=useContext(context1)
 
     const [name,setName]=useState('')
     const [price,setPrice]=useState(0)
@@ -37,18 +37,18 @@ import { getUserDetails } from '../features/user/userSlice'
     useEffect(()=>{
         dispatch(getUserDetails(userLogin.id))
         if(Successcreate){
-            toast.success("Product Created")
+            toast.success(isEn ? "Product Created":"Produit Crée")
             dispatch(reset())
             navigate('/')
         }
         if(Errorcreate){
-            toast.error("Error Create Product !")
+            toast.error(isEn ? "Error Create Product !" :"Erreur De Crée ce Produit")
             dispatch(reset())
         }
         
 
     
-    },[dispatch,Successcreate,navigate,Errorcreate,userLogin.id])
+    },[dispatch,Successcreate,navigate,Errorcreate,userLogin.id,isEn])
 
     const uploadFileHandler=async(e)=>{
         const file=e.target.files[0]
@@ -93,18 +93,18 @@ const submitHandler=(e)=>{
     <>
     <Link to={`/shop/admin/${userDetails?.shopDTO?.id}`} className='btn btn-light my-3'><i className="fa-solid fa-arrow-left"></i> Go Back</Link>
     <FormContainer>
-        <h1 className='addLine'>Create product</h1>
+        <h1 className='addLine'>{isEn ? "Create product":"Crée Une Produit "}</h1>
         {Loadingcreate && <Loader/>}
       
             <Form onSubmit={submitHandler} className='fw-bold'>
             <Form.Group controlId='name' className='mt-3'>
-                    <Form.Label>Name </Form.Label>
-                    <Form.Control type='name' placeholder='Enter name' value={name}
+                    <Form.Label>{isEn ? "Name" :"Nom"} </Form.Label>
+                    <Form.Control type='name' placeholder={isEn ? 'Enter name' :"Entrer votre Nom"} value={name}
                     onChange={(e)=>setName(e.target.value)}> 
                     </Form.Control>
                 </Form.Group>
                 <Form.Group controlId='price' className='mt-3'>
-                    <Form.Label>Price</Form.Label>
+                    <Form.Label>{isEn ?"Enter Price" :"Enter Prix"}</Form.Label>
                     <Form.Control type='number' placeholder='Enter Price' value={price}
                     onChange={(e)=>setPrice(e.target.value)}> 
                     </Form.Control>
@@ -124,7 +124,7 @@ const submitHandler=(e)=>{
                      </Form.Control>
                 </Form.Group>
                 <Form.Group controlId='countInStock' className='mt-3'>
-                <Form.Label>countInStock</Form.Label>
+                <Form.Label>{isEn ? "Count In Stock ": "Quantité Dans Le Stock"}</Form.Label>
                     <Form.Control type='number' placeholder='Enter countInStock ' value={countInStock}
                     onChange={(e)=>setCountInStock(e.target.value)}> 
                      </Form.Control>

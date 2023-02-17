@@ -23,6 +23,21 @@ const initialState={
         ErrorupdateOrder:false,
         messageupdateOrder:''
     },
+
+    getAllUserOrdersMadeInfo:{
+        AllUserOrders:[],   
+        LoadinggetAllUserMadeOrders:false,
+        ErrorgetAllUserMadeOrders:false,
+        messagegetAllUserMadeOrders:'',
+        SuccessgetAllUserMadeOrders:false
+    },
+    deleteOrderInfo:{
+        deletedOrder: {},
+        SuccessdeleteOrder:false,
+        LoadingdeleteOrder:false,
+        ErrordeleteOrder:false,
+        messagedeleteOrder:''
+    },
 }
 
 //create a order
@@ -58,6 +73,33 @@ export const updateOrder=createAsyncThunk('order/update',async(orderIdAndstatus,
     }
 })
 
+//get all user Orders
+export const getAllUserOrders=createAsyncThunk("/demande/getAllOfUser",async(userId,thunkAPI)=>{
+    try {
+       return await orderService.getAllUserOrders(userId)
+    } catch (error) {
+        const message=(error.response &&  error.response.data && error.response.data.message) 
+        || error.message || error.toString()
+        return thunkAPI.rejectWithValue(message)
+    }
+})
+
+
+//get all user Orders
+export const deleteOrder=createAsyncThunk("/demande/delete",async(orderId,thunkAPI)=>{
+    try {
+       return await orderService.deleteOrder(orderId)
+    } catch (error) {
+        const message=(error.response &&  error.response.data && error.response.data.message) 
+        || error.message || error.toString()
+        return thunkAPI.rejectWithValue(message)
+    }
+})
+
+
+
+
+
 
 export const orderSlice=createSlice({
     name:"order",
@@ -80,7 +122,17 @@ export const orderSlice=createSlice({
                 ErrorupdateOrder:false,
                 messageupdateOrder:''
             }
-        }
+        },
+        reset3:(state)=>{
+            state.deleteOrderInfo={
+                deletedOrder: {},
+                SuccessdeleteOrder:false,
+                LoadingdeleteOrder:false,
+                ErrordeleteOrder:false,
+                messagedeleteOrder:''
+            }
+        },
+        
 
     },
     extraReducers:(builder)=>{
@@ -127,9 +179,38 @@ export const orderSlice=createSlice({
         state.updateOrderInfo.ErrorupdateOrder= true  
         state.updateOrderInfo.messageupdateOrder=action.payload 
 })
+///////////////////////////
+.addCase(getAllUserOrders.pending,(state)=>{
+    state.getAllUserOrdersMadeInfo.LoadinggetAllUserMadeOrders=true
+})
+    .addCase(getAllUserOrders.fulfilled,(state,action)=>{
+        state.getAllUserOrdersMadeInfo.AllUserOrders=action.payload
+    state.getAllUserOrdersMadeInfo.LoadinggetAllUserMadeOrders=false
+    state.getAllUserOrdersMadeInfo.SuccessgetAllUserMadeOrders= true       
+})
+    .addCase(getAllUserOrders.rejected,(state,action)=>{
+        state.getAllUserOrdersMadeInfo.LoadinggetAllUserMadeOrders=false
+        state.getAllUserOrdersMadeInfo.ErrorgetAllUserMadeOrders= true  
+        state.getAllUserOrdersMadeInfo.messagegetAllUserMadeOrders=action.payload 
+})
+////////////////////////////////////////
+.addCase(deleteOrder.pending,(state)=>{
+    state.deleteOrderInfo.LoadingdeleteOrder=true
+})
+    .addCase(deleteOrder.fulfilled,(state,action)=>{
+    state.deleteOrderInfo.LoadingdeleteOrder=false
+    state.deleteOrderInfo.SuccessdeleteOrder= true       
+    state.deleteOrderInfo.deletedProduct=action.payload
+})
+    .addCase(deleteOrder.rejected,(state,action)=>{
+        state.deleteOrderInfo.LoadingdeleteOrder=false
+        state.deleteOrderInfo.ErrordeleteOrder= true  
+        state.deleteOrderInfo.messagedeleteOrder=action.payload 
+})
+
 
     }
 })
 
-export const {reset,reset1}=orderSlice.actions
+export const {reset,reset1,reset3}=orderSlice.actions
 export default orderSlice.reducer

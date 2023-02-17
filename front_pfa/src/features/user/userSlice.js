@@ -11,6 +11,7 @@ const initialState={
     isSuccess:false,
     isLoading:false,
     message:'',
+    
     UserDetailsInfo:{
         userDetails:{},
         SuccessgetUserDetails:false,    
@@ -47,7 +48,6 @@ const initialState={
 }
 
 
-
 //login user
 export const login=createAsyncThunk('user/login',async(userData,thunkAPI)=>{
     try {
@@ -76,7 +76,7 @@ export const register=createAsyncThunk('user/register',async(userData,thunkAPI)=
 export const getUserDetails=createAsyncThunk('user/details',async(id,thunkAPI)=>{
     try {
        
-        return await userService.getUserDetails(id)
+        return await userService.getUserDetails(id,thunkAPI)
     } catch (error) {
         const message=(error.response &&  error.response.data && error.response.data.message) 
         || error.message || error.toString()
@@ -88,7 +88,7 @@ export const getUserDetails=createAsyncThunk('user/details',async(id,thunkAPI)=>
 export const updateUser=createAsyncThunk('user/update',async(userdata,thunkAPI)=>{
     try {
     
-        return await userService.updateUser(userdata)
+        return await userService.updateUser(userdata,thunkAPI)
     } catch (error) {
         const message=(error.response &&  error.response.data && error.response.data.message) 
         || error.message || error.toString()
@@ -100,7 +100,7 @@ export const updateUser=createAsyncThunk('user/update',async(userdata,thunkAPI)=
 //get all users
 export const getAllUsers=createAsyncThunk('users/getAll',async(_,thunkAPI)=>{
     try {
-        return await userService.getAllUsers()
+        return await userService.getAllUsers(thunkAPI)
     } catch (error) {
         const message=(error.response &&  error.response.data && error.response.data.message) 
         || error.message || error.toString()
@@ -113,7 +113,7 @@ export const getAllUsers=createAsyncThunk('users/getAll',async(_,thunkAPI)=>{
 export const getSingleUser=createAsyncThunk('user/one',async(id,thunkAPI)=>{
     try {
        
-        return await userService.getSingleUser(id)
+        return await userService.getSingleUser(id,thunkAPI)
     } catch (error) {
         const message=(error.response &&  error.response.data && error.response.data.message) 
         || error.message || error.toString()
@@ -125,7 +125,7 @@ export const getSingleUser=createAsyncThunk('user/one',async(id,thunkAPI)=>{
 export const deleteUser=createAsyncThunk('delete/user',async(id,thunkAPI)=>{
     try {
      //   const token=thunkAPI.getState().user.userInfo.token
-         await userService.deleteUser(id)
+         await userService.deleteUser(id,thunkAPI)
     } catch (error) {
         const message=(error.response &&  error.response.data && error.response.data.message) 
         || error.message || error.toString()
@@ -154,6 +154,14 @@ export const userSlice =createSlice({
                 LoadingDelete:false,
                 ErrorDelete:false,
                 messageDelete:''
+            }
+        },
+        reset2:(state)=>{
+            state.userUpdateInfo={
+                isErrorUpdate:false,
+                isSuccessUpdate:false,
+                isLoadingUpdate:false,
+                messageUpdate:''
             }
         },
         addUserLogin:(state)=>{
@@ -273,5 +281,5 @@ export const userSlice =createSlice({
 })
 
 
-export const {reset,reset1,addUserLogin}=userSlice.actions
+export const {reset,reset1,addUserLogin,reset2}=userSlice.actions
 export default userSlice.reducer

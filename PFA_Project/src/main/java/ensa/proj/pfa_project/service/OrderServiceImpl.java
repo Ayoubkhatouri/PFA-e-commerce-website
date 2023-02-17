@@ -52,4 +52,16 @@ public class OrderServiceImpl implements OrderService{
         orderRepository.save(order);
         return orderMapper.fromOrder(order);
     }
+
+    @Override
+    public List<OrderDTO> findOrdersOfUser(Long userId) {
+        List<Order> orders=orderRepository.findByUserId(userId);
+        return orders.stream().map(o->orderMapper.fromOrder(o)).collect(Collectors.toList());
+    }
+
+    @Override
+    public void deleteOrder(Long orderId) {
+        orderRepository.deleteById(orderId);
+    }
+
 }

@@ -22,47 +22,77 @@ const register=async(userdata)=>{
 }
 
 //get user details
-const getUserDetails=async(id)=>{
+const getUserDetails=async(id,thunkAPI)=>{
+    //get user Login
+    const state=thunkAPI.getState()
+    const userLogin=state.user.userLogin
+
     const config={
         headers:{
-           // Authorization:`Bearer ${token}`
+            Authorization:`Bearer ${userLogin.token}`
         }
     }
-    const {data}=await axios.get(`/api/users/${id}`)
+    const {data}=await axios.get(`/api/users/${id}`,config)
     return data
 }
 
 //Update User Profile
-const updateUser=async(userdata)=>{
-   
-    const {data}=await axios.put(`/api/users/update/${userdata.id}`,userdata)
+const updateUser=async(userdata,thunkAPI)=>{
+    //get user Login
+    const state=thunkAPI.getState()
+    const userLogin=state.user.userLogin
+
+    const config={
+        headers:{
+            Authorization:`Bearer ${userLogin.token}`
+        }
+    }
+    const {data}=await axios.put(`/api/users/update/${userdata.id}`,userdata,config)
    
     return data
 }
 
 //get all Users Profile
-const getAllUsers=async()=>{
-    
-    const {data}=await axios.get('/api/users/getAll')
+const getAllUsers=async(thunkAPI)=>{
+     //get user Login
+     const state=thunkAPI.getState()
+     const userLogin=state.user.userLogin
+ 
+     const config={
+         headers:{
+             Authorization:`Bearer ${userLogin.token}`
+         }
+     }
+    const {data}=await axios.get('/api/users/supadmin/getAll',config)
 
     return data
 }
 
 
 //Delete User
-const deleteUser=async(id)=>{
-    
-    await axios.delete(`/api/users/delete/${id}`)
+const deleteUser=async(id,thunkAPI)=>{
+    const state=thunkAPI.getState()
+    const userLogin=state.user.userLogin
+    const config={
+        headers:{
+            Authorization:`Bearer ${userLogin.token}`
+        }
+    }
+    await axios.delete(`/api/users/supadmin/delete/${id}`,config)
 }
 
 //get user details
-const getSingleUser=async(id)=>{
-    const config={
-        headers:{
-           // Authorization:`Bearer ${token}`
-        }
-    }
-    const {data}=await axios.get(`/api/users/supadmin/${id}`)
+const getSingleUser=async(id,thunkAPI)=>{
+     //get user Login
+     const state=thunkAPI.getState()
+     const userLogin=state.user.userLogin
+ 
+     const config={
+         headers:{
+             Authorization:`Bearer ${userLogin.token}`
+         }
+     }
+    const {data}=await axios.get(`/api/users/supadmin/${id}`,config)
     return data
 }
 
