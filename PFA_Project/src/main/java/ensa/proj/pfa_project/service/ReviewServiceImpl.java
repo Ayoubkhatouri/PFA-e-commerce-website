@@ -45,12 +45,19 @@ public class ReviewServiceImpl implements ReviewService{
     public void deleteReview(Long id) {
         Review review=reviewRepository.findReviewById(id).orElseThrow();
         Product product=productRepository.findProductById(review.getProduct().getId()).orElseThrow();
+
+
         product.getReviews().remove(review);
         product.setNumReviews(product.getNumReviews()-1);
         double somme=0;
+
         for (int i=0;i<product.getReviews().size();i++){
+
             somme+=product.getReviews().get(i).getRating();
         }
+        if(product.getNumReviews()==0)
+            product.setRating(0);
+        else
         product.setRating(somme/product.getNumReviews());
         productRepository.save(product);
         reviewRepository.delete(review);

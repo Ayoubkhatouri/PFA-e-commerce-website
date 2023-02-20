@@ -103,7 +103,7 @@ export const createProduct=createAsyncThunk('product/create',async(product,thunk
 //create a shop
 export const createShop=createAsyncThunk('shop/create',async(shop,thunkAPI)=>{
     try {
-       return  await productService.createShop(shop)
+       return  await productService.createShop(shop,thunkAPI)
     } catch (error) {
         const message=(error.response &&  error.response.data && error.response.data.message) 
         || error.message || error.toString()
@@ -125,7 +125,7 @@ export const listProductDetails=createAsyncThunk('products/getOne',async(id,thun
 //update a product
 export const productCreateReview=createAsyncThunk('product/review',async(productId_and_review,thunkAPI)=>{
     try {
-       return  await productService.productCreateReview(productId_and_review)
+       return  await productService.productCreateReview(productId_and_review,thunkAPI)
     } catch (error) {
         const message=(error.response &&  error.response.data && error.response.data.message) 
         || error.message || error.toString()
@@ -136,7 +136,7 @@ export const productCreateReview=createAsyncThunk('product/review',async(product
 //delete a review
 export const deleteReview=createAsyncThunk("/reviews/deleteReview",async(idrev,thunkAPI)=>{
     try {
-      return  await productService.deleteReview(idrev)
+      return  await productService.deleteReview(idrev,thunkAPI)
     } catch (error) {
         const message=(error.response &&  error.response.data && error.response.data.message) 
         || error.message || error.toString()
@@ -170,7 +170,7 @@ export const listShopDetails=createAsyncThunk('shops/getOne',async(id,thunkAPI)=
 //update a product
 export const updateShop=createAsyncThunk('shop/update',async(shop,thunkAPI)=>{
     try {
-       return  await productService.updateShop(shop)
+       return  await productService.updateShop(shop,thunkAPI)
     } catch (error) {
         const message=(error.response &&  error.response.data && error.response.data.message) 
         || error.message || error.toString()

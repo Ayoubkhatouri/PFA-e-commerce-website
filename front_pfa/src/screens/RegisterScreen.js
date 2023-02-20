@@ -30,11 +30,11 @@ const RegisterScreen = () => {
 
     useEffect(()=>{
         if(isSuccess || userLogin){
-            toast.success(isEn ?'Welcome ' : "Bienvenue "+user.userLogin.firstname +" "+user.userLogin.lastname)
+            toast.success((isEn ?'Welcome ' : "Bienvenue ")+userLogin.firstname +" "+userLogin.lastname)
             navigate('/')
         }
         if(isError) toast.error(message)
-    },[navigate,isSuccess,userLogin,isError,message])
+    },[navigate,isSuccess,userLogin,isError,message,isEn])
 
     const submitHandler=(e)=>{
         e.preventDefault()

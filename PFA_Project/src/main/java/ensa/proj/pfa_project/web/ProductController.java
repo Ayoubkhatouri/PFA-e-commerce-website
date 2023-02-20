@@ -27,15 +27,15 @@ public class ProductController {
     public ProductDTO getProduct(@PathVariable Long id ){
         return productService.getProduct(id);
     }
-    @PostMapping("/create")
+    @PostMapping("/admin/create")
     public ProductDTO createProduct(@RequestBody ProductDTO productDTO){
         return productService.saveProduct(productDTO);
     }
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/admin/delete/{id}")
     public void deleteProduct(@PathVariable Long id){
         productService.deleteProduct(id);
     }
-    @PutMapping("/update/{id}")
+    @PutMapping("/admin/update/{id}")
     public ProductDTO updateProduct(@PathVariable Long id,@RequestBody ProductDTO productDTO){
         return productService.updateProduct(id,productDTO);
     }

@@ -23,13 +23,9 @@ public class SecurityConfiguration {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
         http
                 .csrf().disable()
-                .authorizeHttpRequests().requestMatchers("/api/users/auth/**").permitAll()
-                .requestMatchers("/api/products/delete/**","/api/products/create","/api/products/update/**").hasAnyAuthority("ADMIN","SUPER_ADMIN")
+                .authorizeHttpRequests().requestMatchers("/swagger-ui/**","/v3/api-docs/**","/api/users/auth/**","/api/shops/anyOne/**","/api/products/**").permitAll()
                 .requestMatchers("/api/users/supadmin/**").hasAuthority("SUPER_ADMIN")
-
-                .requestMatchers("/swagger-ui/**","/v3/api-docs/**","/api/products/**","/api/reviews/**","/api/shops/**","/api/orders/**").permitAll()
-               // .requestMatchers( "/api/users/**").hasAnyAuthority("ADMIN","USER","SUPER_ADMIN")
-                .requestMatchers( HttpMethod.GET,"/api/v2/demo-controller2").hasAuthority("ADMIN")
+                .requestMatchers("/api/products/admin/**","/api/shops/admin/**","/api/orders/admin/**").hasAnyAuthority("ADMIN","SUPER_ADMIN")
                 .anyRequest().authenticated()
                 .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)

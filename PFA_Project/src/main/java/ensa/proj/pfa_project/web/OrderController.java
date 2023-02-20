@@ -21,11 +21,11 @@ public class OrderController {
     public OrderDTO createOrder(@RequestBody OrderDTO orderDTO){
         return orderService.saveOrder(orderDTO);
     }
-    @GetMapping("/getByShop/{shopId}")
+    @GetMapping("/admin/getByShop/{shopId}")
     public List<OrderDTO> getAllOrdersOfShop(@PathVariable Long shopId){
         return orderService.findOrders(shopId);
     }
-    @PutMapping ("/update/{id}")
+    @PutMapping ("/admin/update/{id}")
     public OrderDTO updateOrder(@PathVariable Long id, @RequestParam  Status status){
         return orderService.updateOrder(id, status);
     }

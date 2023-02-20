@@ -43,7 +43,7 @@ const initialState={
 //create a order
 export const createOrder=createAsyncThunk('order/create',async(order,thunkAPI)=>{
     try {
-       return  await orderService.createOrder(order)
+       return  await orderService.createOrder(order,thunkAPI)
     } catch (error) {
         const message=(error.response &&  error.response.data && error.response.data.message) 
         || error.message || error.toString()
@@ -54,7 +54,7 @@ export const createOrder=createAsyncThunk('order/create',async(order,thunkAPI)=>
 //get all Demande
 export const getAllShopOrders=createAsyncThunk("/demande/getAll",async(shopId,thunkAPI)=>{
     try {
-       return await orderService.getAllShopOrders(shopId)
+       return await orderService.getAllShopOrders(shopId,thunkAPI)
     } catch (error) {
         const message=(error.response &&  error.response.data && error.response.data.message) 
         || error.message || error.toString()
@@ -65,10 +65,11 @@ export const getAllShopOrders=createAsyncThunk("/demande/getAll",async(shopId,th
 //update a order
 export const updateOrder=createAsyncThunk('order/update',async(orderIdAndstatus,thunkAPI)=>{
     try {
-       return  await orderService.updateOrder(orderIdAndstatus)
+       return  await orderService.updateOrder(orderIdAndstatus,thunkAPI)
     } catch (error) {
         const message=(error.response &&  error.response.data && error.response.data.message) 
         || error.message || error.toString()
+    
         return thunkAPI.rejectWithValue(message)
     }
 })
@@ -76,10 +77,11 @@ export const updateOrder=createAsyncThunk('order/update',async(orderIdAndstatus,
 //get all user Orders
 export const getAllUserOrders=createAsyncThunk("/demande/getAllOfUser",async(userId,thunkAPI)=>{
     try {
-       return await orderService.getAllUserOrders(userId)
+       return await orderService.getAllUserOrders(userId,thunkAPI)
     } catch (error) {
         const message=(error.response &&  error.response.data && error.response.data.message) 
         || error.message || error.toString()
+        
         return thunkAPI.rejectWithValue(message)
     }
 })
@@ -88,7 +90,7 @@ export const getAllUserOrders=createAsyncThunk("/demande/getAllOfUser",async(use
 //get all user Orders
 export const deleteOrder=createAsyncThunk("/demande/delete",async(orderId,thunkAPI)=>{
     try {
-       return await orderService.deleteOrder(orderId)
+       return await orderService.deleteOrder(orderId,thunkAPI)
     } catch (error) {
         const message=(error.response &&  error.response.data && error.response.data.message) 
         || error.message || error.toString()

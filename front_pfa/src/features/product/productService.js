@@ -18,7 +18,7 @@ const createProduct=async(product,thunkAPI)=>{
       }
    }
  
-   const {data}= await axios.post(`/api/products/create`,product,config)
+   const {data}= await axios.post(`/api/products/admin/create`,product,config)
    return data
  }
 
@@ -34,20 +34,23 @@ const updateProduct=async(product,thunkAPI)=>{
       }
    }
 
-  const {data}= await axios.put(`/api/products/update/${product.id}`,product,config)
+  const {data}= await axios.put(`/api/products/admin/update/${product.id}`,product,config)
   return data
 }
  
   //create a shop
-const createShop=async(shop)=>{
- 
+const createShop=async(shop,thunkAPI)=>{
+   //get user info
+   const state=thunkAPI.getState()
+   const userInfo=state.user.userLogin
+
    const config={
       headers:{
-       'Content-Type':'application/json'
+         Authorization:`Bearer ${userInfo.token}`
       }
    }
 
-  const {data}= await axios.post(`/api/shops/create`,shop)
+  const {data}= await axios.post(`/api/shops/create`,shop,config)
   return data
 }
 
@@ -59,35 +62,58 @@ const createShop=async(shop)=>{
 }
 
 //create a review
-const productCreateReview=async(productId_and_review)=>{
+const productCreateReview=async(productId_and_review,thunkAPI)=>{
    //get user info
-const {data}= await axios.post(`/api/reviews/create`,productId_and_review)
+   const state=thunkAPI.getState()
+   const userInfo=state.user.userLogin
+
+   const config={
+      headers:{
+         Authorization:`Bearer ${userInfo.token}`
+      }
+   }
+const {data}= await axios.post(`/api/reviews/create`,productId_and_review,config)
 return data
 }
 
 //delete  a review
-const deleteReview=async(idrev)=>{
-const  {data}=await axios.delete(`/api/reviews/delete/${idrev}`)
+const deleteReview=async(idrev,thunkAPI)=>{
+    //get user info
+    const state=thunkAPI.getState()
+    const userInfo=state.user.userLogin
+ 
+    const config={
+       headers:{
+          Authorization:`Bearer ${userInfo.token}`
+       }
+    }
+const  {data}=await axios.delete(`/api/reviews/delete/${idrev}`,config)
 return data
 }
 
 //get shops
 const listShops=async()=>{
-   const response=await  axios.get(`/api/shops/getAll`)
+   const response=await  axios.get(`/api/shops/anyOne/getAll`)
  
    return response.data
 }
 
  //get a single product Details
  const listShopDetails=async(id)=>{
-   const response=await axios.get(`/api/shops/${id}`)
+   const response=await axios.get(`/api/shops/anyOne/${id}`)
    return response.data
 }
 
 //upadre a product
-const updateShop=async(shop)=>{
-  
-  const {data}= await axios.put(`/api/shops/edit/${shop.id}`,shop)
+const updateShop=async(shop,thunkAPI)=>{
+   const state=thunkAPI.getState()
+   const userInfo=state.user.userLogin
+   const config={
+      headers:{
+         Authorization:`Bearer ${userInfo.token}`
+      }
+   }
+  const {data}= await axios.put(`/api/shops/admin/edit/${shop.id}`,shop,config)
   return data
 }
 
@@ -100,7 +126,7 @@ const deleteProduct=async(id,thunkAPI)=>{
          Authorization:`Bearer ${userInfo.token}`
       }
    }
-   await axios.delete(`/api/products/delete/${id}`,config)
+   await axios.delete(`/api/products/admin/delete/${id}`,config)
 }
  
  const productService={

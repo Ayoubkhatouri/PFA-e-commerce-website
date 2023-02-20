@@ -42,6 +42,7 @@ dispatch(getAllShopOrders(params.id))
    },[dispatch,userLogin?.id,params.id,SuccessupdateOrder,ErrorupdateOrder])
 
    const confirmerHndler=(orderId)=>{
+    
 alert("Vous etes sur de confirmer cette demande ?")
     dispatch(updateOrder({orderId,status1:  "Accepted"}))
    
@@ -87,7 +88,7 @@ alert("Vous etes sur de confirmer cette demande ?")
                       <td>{order.ownerLastName}  {order.ownerFirstName}</td>
                   
                       <td>
-                      <Button disabled={order.status==="Accepted" ||order.status==="Refused"} variant='success'  className='mx-2 mt-1 styleBtn' onClick={()=>confirmerHndler(order?.id)}>
+                      <Button disabled={order.status==="Accepted" ||order.status==="Refused"} variant='success'  className='mx-2 mt-1 styleBtn' onClick={(e)=>confirmerHndler(order?.id)}>
                           <i className="fa-solid fa-check" style={{color:'green'}}></i>
                           </Button>
                      

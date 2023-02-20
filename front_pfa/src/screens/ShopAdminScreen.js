@@ -51,10 +51,10 @@ const handlDelete=(productId)=>{
     <>
      
      <div id="ct">
-  <div class="corner "id="left_top"></div>
-  <div class="corner" id="left_bottom"></div>
-  <div class="corner" id="right_top"></div>
-  <div class="corner" id="right_bottom"></div>
+  <div className="corner "id="left_top"></div>
+  <div className="corner" id="left_bottom"></div>
+  <div className="corner" id="right_top"></div>
+  <div className="corner" id="right_bottom"></div>
   <span>{userDetails && userDetails.shopDTO && userDetails.shopDTO.name}</span>
   <blockquote>
     <p><i>&ldquo; {userDetails && userDetails.shopDTO && userDetails.shopDTO.description}&rdquo; </i></p>

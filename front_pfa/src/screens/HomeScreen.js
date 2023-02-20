@@ -87,8 +87,8 @@ const HomeScreen = () => {
       </div>
       <div className='textStore' >
       <h4 className='titleShop'>{shop.name}</h4>
-      <div ><strong> Number products :</strong>{shop.productsDto.length}</div>
-      <div><strong>Owner: </strong>{shop.ownerFirstName} {shop.ownerLastName}</div>
+      <div ><strong>{isEn ?"Number Of products :" :"Nombre De Produits :"} </strong>{shop.productsDto.length}</div>
+      <div><strong>{isEn ? "Owner :" :"Propriétaire"} </strong>{shop.ownerFirstName} {shop.ownerLastName}</div>
       </div>
     </div>
     

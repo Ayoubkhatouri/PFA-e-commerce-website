@@ -21,16 +21,16 @@ public class ShopController {
     public ShopDTO createShop(@RequestBody ShopDTO shopDTO){
         return shopService.saveShop(shopDTO);
     }
-    @GetMapping("/getAll")
+    @GetMapping("/anyOne/getAll")
     public List<ShopDTO> getAllShops(){
         return shopService.getAllShops();
     }
-    @GetMapping("/{id}")
+    @GetMapping("/anyOne/{id}")
     public ShopDTO getShop(@PathVariable Long id){
         return shopService.getShop(id);
     }
 
-    @PutMapping("/edit/{id}")
+    @PutMapping("/admin/edit/{id}")
     public ShopDTO editShop(@PathVariable Long id,@RequestBody ShopEditRequest shopEditRequest){
         return shopService.editShop(id,shopEditRequest.name,shopEditRequest.description);
     }

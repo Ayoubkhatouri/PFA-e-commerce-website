@@ -17,16 +17,19 @@ const LoginScreen = () => {
     const [email,setEmail]=useState('')
     const [password,setPassword]=useState('')
 
+    
+    const {isEn} = useContext(context1)
+
     const {isError,isSuccess,isLoading,message,userLogin}=useSelector(state=>state.user)
 
     useEffect(()=>{
         if(isSuccess || userLogin){
-            toast.success(isEn ?'Welcome ' : "Bienvenue "+userLogin.firstname +" "+userLogin.lastname)
+            toast.success((isEn ?'Welcome ' : "Bienvenue ")+userLogin.firstname +" "+userLogin.lastname)
           navigate('/')
         }
         if(isError) toast.error(message)
        
-    },[dispatch,isSuccess,userLogin,navigate,isError,message])
+    },[dispatch,isSuccess,userLogin,navigate,isError,message,isEn])
   
    
 
@@ -37,7 +40,6 @@ const LoginScreen = () => {
         dispatch(login({email,password}))
     }
 
-    const {isEn} = useContext(context1)
     if(isLoading)
     return <Spinner/>
 
