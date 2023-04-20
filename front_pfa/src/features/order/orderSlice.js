@@ -54,7 +54,7 @@ export const createOrder=createAsyncThunk('order/create',async(order,thunkAPI)=>
 //get all Demande
 export const getAllShopOrders=createAsyncThunk("/demande/getAll",async(shopId,thunkAPI)=>{
     try {
-       return await orderService.getAllShopOrders(shopId,thunkAPI)
+       return await orderService.getAllShopOrders(shopId)
     } catch (error) {
         const message=(error.response &&  error.response.data && error.response.data.message) 
         || error.message || error.toString()
@@ -134,7 +134,15 @@ export const orderSlice=createSlice({
                 messagedeleteOrder:''
             }
         },
-        
+        reset4:(state)=>{
+            state.getAllShopOrdersReceivedInfo={
+                AllShopOrders:[],   
+        LoadinggetAllShopReceivedOrders:false,
+        ErrorgetAllShopReceivedOrders:false,
+        messagegetAllShopReceivedOrders:'',
+        SuccessgetAllShopReceivedOrders:false
+            }
+        },
 
     },
     extraReducers:(builder)=>{
@@ -214,5 +222,5 @@ export const orderSlice=createSlice({
     }
 })
 
-export const {reset,reset1,reset3}=orderSlice.actions
+export const {reset,reset1,reset3,reset4    }=orderSlice.actions
 export default orderSlice.reducer

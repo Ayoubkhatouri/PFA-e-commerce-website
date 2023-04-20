@@ -492,3 +492,40 @@ flex-wrap: wrap;
 border: 1px solid #2c3e50;
 border-radius: 20%;
 }
+
+.Count {
+  padding: 2rem;
+  margin: 1rem;
+  border-radius: 2em;
+  border-bottom: 10px solid #2c3e50;
+  background-color: whitesmoke;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  padding: 1em 0;
+  position: relative;
+  font-size: 16px;
+  border-radius: 0.5em;
+  color: #2c3e50;
+}
+span.num {
+  color: #2c3e50;
+  display: grid;
+  place-items: center;
+  font-weight: 600;
+  font-size: 3em;
+}
+span.text {
+  color: #2c3e50;
+  font-size: 1.1em;
+  text-align: center;
+  pad: 0.7em 0;
+  font-weight: 400;
+  line-height: 0;
+}
+.Count > h4{
+  text-align: center;
+}
+h4 > i{
+  font-size: 2em;
+}

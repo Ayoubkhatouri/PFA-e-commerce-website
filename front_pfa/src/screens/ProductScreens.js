@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch,useSelector } from 'react-redux'
-import { Row, Col, Image, ListGroup, Card, Button, ListGroupItem, Spinner,Form } from "react-bootstrap"
+import { Row, Col, Image, ListGroup, Card, Button, ListGroupItem,Form } from "react-bootstrap"
 import { useParams } from 'react-router-dom'
 import Rating from '../components/Rating'
 import { listProductDetails ,productCreateReview,deleteReview,reset2,reset3,listProducts} from '../features/product/productSlice'
@@ -10,6 +10,7 @@ import {toast} from 'react-toastify'
 import Products from '../components/Products'
 import { createOrder,reset } from '../features/order/orderSlice'
 import { getUserDetails } from '../features/user/userSlice'
+import Loader from '../components/Loader'
 
 
 const ProductScreen = () => {
@@ -42,8 +43,6 @@ const ProductScreen = () => {
     let productSameCategory=products.filter(p=>p.category===productDetails.product.category && p.id!==productDetails.product.id)
     
 
-
-   
     const params = useParams()
 
     useEffect(() => {
@@ -110,7 +109,7 @@ const ProductScreen = () => {
        }
 
     if(isLoading)
-    return <Spinner/>
+    return <Loader/>
 
     return (
         <><Link to='/' className='btn btn-light my-3'><i className="fa-solid fa-arrow-left"></i> Go Back</Link>
@@ -186,7 +185,7 @@ const ProductScreen = () => {
                             )}
                             {userDetails?.shopDTO?.id!==productDetails?.product.shopId &&(
                             <ListGroupItem>
-                                <Button onClick={addtoCartHandler} className='btn-block ' type='button' disabled={productDetails.product.countInStock === 0 }>Commander</Button>
+                                <Button onClick={addtoCartHandler} className='btn-block ' type='button' disabled={productDetails.product.countInStock === 0 || !userLogin}>Commander</Button>
                             </ListGroupItem>
                         )}
                         </ListGroup>

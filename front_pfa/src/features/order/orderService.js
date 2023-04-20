@@ -16,17 +16,9 @@ import axios from "axios";
   }
 
  // get all Demande of a shop
- const getAllShopOrders=async(shopId,thunkAPI)=>{
-   //get user info
-   const state=thunkAPI.getState()
-   const userInfo=state.user.userLogin
- 
-   const config={
-      headers:{
-         Authorization:`Bearer ${userInfo.token}`
-      }
-   }
-    const {data}=await axios.get(`/api/orders/admin/getByShop/${shopId}`,config)
+ const getAllShopOrders=async(shopId)=>{
+  
+    const {data}=await axios.get(`/api/orders/admin/getByShop/${shopId}`)
     return data
  }
 

@@ -23,7 +23,7 @@ public class SecurityConfiguration {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
         http
                 .csrf().disable()
-                .authorizeHttpRequests().requestMatchers("/swagger-ui/**","/v3/api-docs/**","/api/users/auth/**","/api/shops/anyOne/**","/api/products/**").permitAll()
+                .authorizeHttpRequests().requestMatchers("/swagger-ui/**","/v3/api-docs/**","/api/users/auth/**","/api/shops/anyOne/**","/api/products/**","/api/orders/admin/getByShop/**").permitAll()
                 .requestMatchers("/api/users/supadmin/**").hasAuthority("SUPER_ADMIN")
                 .requestMatchers("/api/products/admin/**","/api/shops/admin/**","/api/orders/admin/**").hasAnyAuthority("ADMIN","SUPER_ADMIN")
                 .anyRequest().authenticated()

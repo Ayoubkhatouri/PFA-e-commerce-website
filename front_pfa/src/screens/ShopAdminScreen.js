@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect,useContext } from 'react'
 import { Button, Col, Row } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { LinkContainer } from 'react-router-bootstrap'
@@ -8,6 +8,9 @@ import { useParams } from 'react-router-dom'
 import { deleteProduct,reset5} from '../features/product/productSlice'
 import { toast } from 'react-toastify'
 import { useNavigate } from 'react-router-dom'
+import Count from '../components/Count'
+import { getAllShopOrders, reset4 } from '../features/order/orderSlice'
+import context1 from '../context1'
 
 
 const ShopAdminScreen = () => {
@@ -24,8 +27,15 @@ const ShopAdminScreen = () => {
   const {LoadingDelete,ErrorDelete,messageDelete,SuccessDelete}=product.deleteProductInfo
   
 
-  useEffect(()=>{
+  
+  const order=useSelector(state=>state.order)
+  const {AllShopOrders,SuccessgetAllShopReceivedOrders}=order.getAllShopOrdersReceivedInfo
 
+  const {isEn} = useContext(context1)
+
+  useEffect(()=>{
+    dispatch(reset4())
+    dispatch(getAllShopOrders(params.id))
     if(userLogin)
     dispatch(getUserDetails(userLogin.id))
     if(SuccessDelete)
@@ -38,11 +48,49 @@ const ShopAdminScreen = () => {
       dispatch(reset5())
     }
  
-},[dispatch,userLogin,SuccessDelete,ErrorDelete])
+ 
+},[dispatch,userLogin,SuccessDelete,ErrorDelete,params.id])
+
+  
 
 const handlDelete=(productId)=>{
   dispatch(deleteProduct(productId))
  }
+
+ 
+let nbrRting=0
+userDetails?.shopDTO?.productsDto?.map(p=>(
+ p.reviewDTOS.map(r=>
+   nbrRting+=r.rating
+ ) 
+))
+
+const counts=[
+  { 
+   "logo":<i className="fa-brands fa-product-hunt"></i>,
+   "id": "1",
+   "label": isEn ?"Products" : "Produits",
+   "number":  (userDetails?.shopDTO?.productsDto?.length!==undefined) ? userDetails?.shopDTO?.productsDto?.length+"" : "0",
+   "duration": "1"},
+   { 
+     "logo":    <i className='fas fa-star' ></i>,
+     "id": "2",
+     "label":isEn ? "Products Stars" : "Produits Etoiles",
+     "number": nbrRting+"",
+     "duration": "1"},
+   { 
+       "logo":<i className="fas fa-inbox"></i>    ,
+       "id": "3",
+       "label": isEn ? "Received Demandes" : "Demandes Recus",
+       "number": AllShopOrders?.length+"",
+       "duration": "1"},
+    { 
+         "logo":<i className="fas fa-check-circle"></i>,
+         "id": "4",
+         "label":  isEn ? "Accepted Demandes" : "Demandes Acceptées",
+         "number": AllShopOrders?.filter(o=>o.status==="Accepted").length+"",
+         "duration": "1"},
+]
 
  
 
@@ -61,6 +109,14 @@ const handlDelete=(productId)=>{
   </blockquote>
 </div>
 
+<Row>
+  {counts.map(c=>(
+    <Col key={c.id}  sm={6} md={6} lg={3} xl={3}>
+    <Count data={c}/>
+    </Col>
+  ))}
+</Row>
+
       <Row style={{
         marginBottom:"40px",
         marginTop:"40px",
@@ -78,9 +134,6 @@ const handlDelete=(productId)=>{
             </LinkContainer>
             <LinkContainer to={`/admin/orders/received/${params.id}`}>
             <li>Demandes Recus</li>
-            </LinkContainer>
-            <LinkContainer to={`/admin/orders/statisques/${params.id}`}>
-            <li>Statistique</li>
             </LinkContainer>
           </ul>      
                         
