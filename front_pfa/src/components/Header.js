@@ -20,12 +20,14 @@ const userLogin=user.userLogin
 
   const {LoadinggetUserDetails,ErrorgetUserDetails,userDetails}=user.UserDetailsInfo
 
-
+ 
 
  
   const userLocalStorage=JSON.parse(localStorage.getItem('userLogin'))
   useEffect(()=>{
-    
+    if(ErrorgetUserDetails){
+      logoutHandler()
+    }
     if(userLocalStorage)
     dispatch(getUserDetails(userLocalStorage.id))
     if(userLocalStorage?.id !==userLogin?.id)
@@ -33,13 +35,12 @@ const userLogin=user.userLogin
   
    
 
-},[dispatch,userLogin?.id ])
+},[dispatch,userLogin?.id ,ErrorgetUserDetails])
 
   const logoutHandler=()=>{
     localStorage.removeItem('userLogin')
     navigate('/')
     window.location.reload()
-
   }
 
   return (
@@ -73,8 +74,7 @@ const userLogin=user.userLogin
          <NavDropdown.Item>{isEn ? "Create Your Shop":"Crée Votre Boutique"} </NavDropdown.Item>
        </LinkContainer>
            }
-                
-                 
+
                  {userLogin && userLogin.role==="SUPER_ADMIN"&& (
               
                   <LinkContainer to='/users/all'>

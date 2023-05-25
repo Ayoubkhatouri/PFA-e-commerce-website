@@ -11,6 +11,8 @@ import { useNavigate } from 'react-router-dom'
 import Count from '../components/Count'
 import { getAllShopOrders, reset4 } from '../features/order/orderSlice'
 import context1 from '../context1'
+import Spinner from '../components/Spinner'
+import Meta from '../components/Meta'
 
 
 const ShopAdminScreen = () => {
@@ -21,7 +23,7 @@ const ShopAdminScreen = () => {
   const params=useParams()
   const navigate=useNavigate()
 
-  const {LoadingUserDetails,ErrorUserDetails,userDetails}=user.UserDetailsInfo
+  const {LoadinggetUserDetails,ErrorUserDetails,userDetails}=user.UserDetailsInfo
 
   const product=useSelector(state=>state.product)
   const {LoadingDelete,ErrorDelete,messageDelete,SuccessDelete}=product.deleteProductInfo
@@ -93,11 +95,11 @@ const counts=[
 ]
 
  
-
+if(LoadinggetUserDetails) return <Spinner/>
 
   return (
     <>
-     
+      <Meta title={isEn ? "Admin Shop" : "Magasin Administrateur"}/>
      <div id="ct">
   <div className="corner "id="left_top"></div>
   <div className="corner" id="left_bottom"></div>

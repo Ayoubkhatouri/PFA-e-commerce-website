@@ -15,11 +15,11 @@ import java.util.Collection;
 import java.util.List;
 
 
-@Data
-@Builder
+@Data //for setter and getter
+@Builder // so we can create a new user by just User u =User.Builder().firstName....
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
+@Entity //to make treat user as an entitie JPA(Java persistence API) for mapping java object to raltional databases
 public class User implements UserDetails {
     @Id
     @GeneratedValue

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState,useContext } from 'react'
 import { Button, Form } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate, useParams } from 'react-router-dom'
@@ -6,9 +6,12 @@ import { toast } from 'react-toastify'
 import FormContainer from '../components/FormContainer'
 import Loader from '../components/Loader'
 import { listProductDetails,updateProduct,reset7,reset8} from '../features/product/productSlice'
+import Meta from '../components/Meta'
+import context1 from '../context1'
+
 
 const EditProductScreen = () => {
-
+  const {isEn,setIsEn}=useContext(context1)
   const dispatch=useDispatch()
     
     const navigate=useNavigate()
@@ -91,6 +94,7 @@ e.preventDefault()
 
   return (
     <>
+       <Meta title={isEn ? "Edit Product" : "Modifier Produit"}/>
     <Link to={`/shop/admin/${productDetails?.product?.id}`} className='btn btn-light my-3'><i className="fa-solid fa-arrow-left"></i> Go Back</Link>
     <FormContainer>
         <h1 className='addLine'>Update product</h1>

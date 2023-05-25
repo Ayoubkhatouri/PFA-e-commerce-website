@@ -1,4 +1,4 @@
-import React,{useEffect, useState} from 'react'
+import React,{useEffect, useState,useContext} from 'react'
 import { Button,Form } from 'react-bootstrap'
 import {  Link, useNavigate } from 'react-router-dom'
 import FormContainer from '../components/FormContainer'
@@ -6,10 +6,13 @@ import { useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { listShopDetails,updateShop,reset4 } from '../features/product/productSlice'
 import { toast } from 'react-toastify'
+import Meta from '../components/Meta'
+import context1 from '../context1'
 
 
 
 const EditShopScreen = () => {
+    const {isEn,setIsEn}=useContext(context1)
     const [name,setName]=useState("")
     const [description,setDescription]=useState("")
     const params=useParams()
@@ -48,6 +51,7 @@ const EditShopScreen = () => {
 
   return (
     <>
+     <Meta title={isEn ? "Edit Shop" : "Modifier Magasin"}/>
     <Link to={`/shop/admin/${params.id}`} className='btn btn-light my-3'><i className="fa-solid fa-arrow-left"></i> Go Back</Link>
     <FormContainer>
         <h1 className='addLine'>Edit Your Shop</h1>

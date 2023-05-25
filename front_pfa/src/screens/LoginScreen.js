@@ -7,6 +7,7 @@ import { login } from '../features/user/userSlice'
 import Spinner from '../components/Spinner'
 import context1 from '../context1'
 import {toast} from 'react-toastify'
+import Meta from '../components/Meta'
 
 
 
@@ -44,6 +45,8 @@ const LoginScreen = () => {
     return <Spinner/>
 
   return (
+    <>
+    <Meta title={isEn ? "Login" : "Se Connectez"}/>
     <div className='backReg fw-bold'> 
     <FormContainer>
     <h1 className='addLine mb-5 mt-3'>{isEn ? "Login":'Se Connecter'}</h1>
@@ -71,7 +74,7 @@ const LoginScreen = () => {
   
 </FormContainer>
 </div>
-  )
+</>)
 }
 
 export default LoginScreen

@@ -1,4 +1,4 @@
-import React,{useState,useEffect} from 'react'
+import React,{useState,useEffect,useContext} from 'react'
 import {  useNavigate, useParams } from "react-router-dom"
 import {Form ,Button, Row ,Col, Table} from 'react-bootstrap'
 import {LinkContainer} from 'react-router-bootstrap'
@@ -8,6 +8,8 @@ import Spinner from '../components/Spinner'
 import { getSingleUser,updateUser,reset } from '../features/user/userSlice'
 import { toast } from 'react-toastify'
 import Loader from '../components/Loader'
+import Meta from '../components/Meta'
+import context1 from '../context1'
 
 
 
@@ -15,6 +17,7 @@ import Loader from '../components/Loader'
    
     const dispatch=useDispatch()
     const params=useParams()
+    const {isEn} = useContext(context1)
 
     const navigate=useNavigate()
     const user=useSelector(state=>state.user)
@@ -72,7 +75,9 @@ const submitHandler=(e)=>{
   if(isLoadingUpdate)
   return <Spinner/>
 
-  return <Row>
+  return(<>
+        <Meta title={isEn ? "Update User" : "Modifier Utilisateur"}/>
+   <Row>
     <Col >
     <h2  className='addLine mb-5 mt-3 '>{userLogin?.userName} Profile </h2>
 {LoadinggetUser && <Loader/>}
@@ -121,7 +126,7 @@ const submitHandler=(e)=>{
         </Form>
     </Col>
     
-  </Row>
+  </Row></>)
 }
 
 export default ProfileScreen

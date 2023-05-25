@@ -8,6 +8,7 @@ import Loader from '../components/Loader'
 import { toast } from 'react-toastify'
 import { getUserDetails } from '../features/user/userSlice'
 import context1 from '../context1'
+import Meta from '../components/Meta'
 
  const CreateProductScreen  = () => {
     const {isEn,setIsEn}=useContext(context1)
@@ -91,6 +92,7 @@ const submitHandler=(e)=>{
 
   return (
     <>
+    <Meta title={isEn ? "Create A Product" : "Cree Un Produit"}/>
     <Link to={`/shop/admin/${userDetails?.shopDTO?.id}`} className='btn btn-light my-3'><i className="fa-solid fa-arrow-left"></i> Go Back</Link>
     <FormContainer>
         <h1 className='addLine'>{isEn ? "Create product":"Crée Une Produit "}</h1>

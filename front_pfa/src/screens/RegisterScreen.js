@@ -7,6 +7,7 @@ import { register } from '../features/user/userSlice'
 import Spinner from '../components/Spinner'
 import {toast} from 'react-toastify'
 import context1 from '../context1'
+import Meta from '../components/Meta'
 
 
 
@@ -58,6 +59,8 @@ const RegisterScreen = () => {
        return <Spinner/>
 
   return (
+    <>
+    <Meta title={isEn ? "Register" : "S'inscrire"}/>
     <div className='backReg'>
 
         <Row>
@@ -137,7 +140,7 @@ const RegisterScreen = () => {
            </Col>
     </Row>
     </div>
-  )
+    </> )
 }
 
 export default RegisterScreen

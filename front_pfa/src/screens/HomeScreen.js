@@ -8,6 +8,8 @@ import context1 from '../context1'
 import { listProducts,listShops } from '../features/product/productSlice'
 import  Loader  from '../components/Loader'
 import ProductCarousel from '../components/ProductCarsoul'
+import Spinner from '../components/Spinner'
+import Meta from '../components/Meta'
 
 
 
@@ -66,11 +68,12 @@ const HomeScreen = () => {
 
 
   if(isLoading)
-  return <Loader/>
+  return <Spinner/>
 
   return (
    
     <>
+    <Meta title={isEn ? "Welcome To Proshop" : "Bienvenue Sur Proshop"}/>
     <Row>
     <Col   sm={12} md={8} lg={7} xl={7}>
     <ProductCarousel allProducts={products}/>

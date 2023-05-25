@@ -28,9 +28,7 @@ public class JwtService {
     }
 
     public  String generateToken(UserDetails userDetails){
-        // Map<String ,Object> mp=new HashMap<>();
-        // mp.put("role",userDetails.getAuthorities().stream().map(ga->ga.getAuthority()).collect(Collectors.toList()));
-        return generateToken(new HashMap<>(),userDetails);
+                return generateToken(new HashMap<>(),userDetails);
     }
 
 
@@ -40,7 +38,7 @@ public class JwtService {
                 .setClaims(extraClaims)
                 .setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis()+1000*60*24))
+                .setExpiration(new Date(System.currentTimeMillis()+1000*60*60*24))
                 .signWith(getSignInKey(), SignatureAlgorithm.HS256)
                 .compact();
     }

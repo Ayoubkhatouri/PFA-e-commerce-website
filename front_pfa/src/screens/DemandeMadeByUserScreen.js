@@ -10,6 +10,7 @@ import Spinner from '../components/Spinner'
 import context1 from '../context1'
 import { getUserDetails } from '../features/user/userSlice'
 import { toast } from 'react-toastify'
+import Meta from '../components/Meta'
 
 
 
@@ -43,16 +44,18 @@ dispatch(getAllUserOrders(userLogin.id))
    dispatch(deleteOrder(orderId))
    
    }
-
+if(LoadinggetAllUserMadeOrders) return <Spinner/>
 
   return (
+    <>
+    <Meta title={isEn ? `Demands Made By ${userLogin?.firstname}`  : `Demandes Par ${userLogin?.firstname}`}/>
     <div> 
            <Link to={`/shop/admin/${userDetails.shopDTO?.id}`} className='btn btn-light my-3'><i className="fa-solid fa-arrow-left"></i>{isEn ? "Return":'Revenir'}</Link>
         {AllUserOrders.length === 0 ? <h1 className='addLine'>{isEn ? "No Demands":"Vous N'avez  Aucune Demandes"}</h1> : (
             <>
-  <h1 className='addLine mb-5 mt-3'>{isEn ? "Received Demands":'Demandes Recus'}</h1>
+  <h1 className='addLine mb-5 mt-3'>{isEn ? "Made Demands":'Demandes Envoyé'}</h1>
   {/*Errordelete && <Message variant='danger'>{messagedelete}</Message>*/}
-  {LoadinggetAllUserMadeOrders ? <Spinner/> : ErrorgetAllUserMadeOrders ? <Message variant='danger'>{messagegetAllUserMadeOrders}</Message> : (
+  { ErrorgetAllUserMadeOrders ? <Message variant='danger'>{messagegetAllUserMadeOrders}</Message> : (
       <Table striped bordered="true" hover responsive className='table-sm'>
           <thead>
               <tr> 
@@ -91,7 +94,7 @@ dispatch(getAllUserOrders(userLogin.id))
       
     </div>
   
-  )
+    </> )
 }
 
 export default DemandeMadeByUserScreen

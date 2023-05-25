@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect,useContext } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch,useSelector } from 'react-redux'
 import { Row, Col, Image, ListGroup, Card, Button, ListGroupItem,Form } from "react-bootstrap"
@@ -10,10 +10,13 @@ import {toast} from 'react-toastify'
 import Products from '../components/Products'
 import { createOrder,reset } from '../features/order/orderSlice'
 import { getUserDetails } from '../features/user/userSlice'
-import Loader from '../components/Loader'
+import Spinner from '../components/Spinner'
+import Meta from '../components/Meta'
+import context1 from '../context1'
 
 
 const ProductScreen = () => {
+    const {isEn} = useContext(context1)
     const [qty,setQty]=useState(1)
     const [inStock,setInStock]=useState(0)
     const [rating,setRating]=useState(0)
@@ -30,7 +33,8 @@ const ProductScreen = () => {
 
     const product=useSelector(state=>state.product)
     const order=useSelector(state=>state.order)
-    const {isLoading,isError,message,productDetails}=product 
+    const {productDetails}=product 
+    const {isLoading}=productDetails
     const {products}=product.productsDetails
     const user=useSelector(state=>state.user)
     const {userLogin}=user 
@@ -109,9 +113,11 @@ const ProductScreen = () => {
        }
 
     if(isLoading)
-    return <Loader/>
+    return <Spinner/>
 
     return (
+        <>
+        <Meta title={ productDetails.product.name }/>
         <><Link to='/' className='btn btn-light my-3'><i className="fa-solid fa-arrow-left"></i> Go Back</Link>
            
                 <>
@@ -275,7 +281,7 @@ const ProductScreen = () => {
             
             
         </>
-    )
+ </>   )
 }
 
 export default ProductScreen

@@ -1,4 +1,4 @@
-import React,{useState,useEffect} from 'react'
+import React,{useState,useEffect,useContext} from 'react'
 import {  useNavigate } from "react-router-dom"
 import {Form ,Button, Row ,Col, Table} from 'react-bootstrap'
 import {LinkContainer} from 'react-router-bootstrap'
@@ -7,6 +7,8 @@ import Message from '../components/Message'
 import Spinner from '../components/Spinner'
 import { getUserDetails,updateUser,reset2 } from '../features/user/userSlice'
 import { toast } from 'react-toastify'
+import Meta from '../components/Meta'
+import context1 from '../context1'
 
 
 
@@ -14,13 +16,14 @@ import { toast } from 'react-toastify'
    
     const dispatch=useDispatch()
 
-
+    const {isEn} = useContext(context1)
     const navigate=useNavigate()
     const user=useSelector(state=>state.user)
     const {userLogin}=user
 
 
-    const {LoadingUserDetails,ErrorUserDetails,userDetails}=user.UserDetailsInfo
+    const {LoadinggetUserDetails,userDetails}=user.UserDetailsInfo
+
     const {isLoadingUpdate,isErrorUpdate,isSuccessUpdate,messageUpdate}=user.userUpdateInfo
 
     const [nom,setName]=useState("")
@@ -70,10 +73,13 @@ const submitHandler=(e)=>{
 
  }
 
-  if(isLoadingUpdate)
+ 
+  if(isLoadingUpdate || LoadinggetUserDetails)
   return <Spinner/>
 
-  return <Row>
+  return(<>
+  <Meta title={isEn ? "Profile" : "Profile"}/>
+   <Row>
     <Col >
     <h2  className='addLine mb-5 mt-3 '>{userLogin.firstname} Profile </h2>
 
@@ -116,6 +122,7 @@ const submitHandler=(e)=>{
     </Col>
     
   </Row>
+  </>)
 }
 
 export default ProfileScreen

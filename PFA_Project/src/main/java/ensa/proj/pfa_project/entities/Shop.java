@@ -23,5 +23,4 @@ public class Shop {
     private List<Product> products=new ArrayList<>();
     @OneToMany(mappedBy = "shop")
     private List<Order> orders=new ArrayList<>();
-
 }

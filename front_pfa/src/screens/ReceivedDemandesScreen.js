@@ -10,6 +10,7 @@ import Spinner from '../components/Spinner'
 import context1 from '../context1'
 import { getUserDetails } from '../features/user/userSlice'
 import { toast } from 'react-toastify'
+import Meta from '../components/Meta'
 
 
 
@@ -56,7 +57,10 @@ alert("Vous etes sur de confirmer cette demande ?")
 
 
   return (
+    <>
+    <Meta title={isEn ? "Recieved Demands" : "Demandes Recus"}/>
     <div> 
+        
            <Link to={`/shop/admin/${userDetails.shopDTO?.id}`} className='btn btn-light my-3'>{isEn ? "Return":'Revenir'}</Link>
         {AllShopOrders.length === 0 ? <h1>{isEn ? "No Received Demands":"Vous N'avez Recus Aucune Demandes"}</h1> : (
             <>
@@ -105,7 +109,7 @@ alert("Vous etes sur de confirmer cette demande ?")
       
     </div>
   
-  )
+    </> )
 }
 
 export default ReceivedDemandesScreen

@@ -12,12 +12,8 @@ import java.util.stream.Stream;
 @SpringBootApplication
 
 public class PfaProjectApplication {
-
 	public static void main(String[] args) {
 		SpringApplication.run(PfaProjectApplication.class, args);
 	}
-
-
-
 
 }

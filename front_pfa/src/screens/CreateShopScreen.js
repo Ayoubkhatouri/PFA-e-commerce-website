@@ -1,4 +1,4 @@
-import React,{useState,useEffect} from 'react'
+import React,{useState,useEffect,useContext} from 'react'
 import { Link, useNavigate, useLocation ,useParams} from "react-router-dom"
 import {Form ,Button, Spinner} from 'react-bootstrap'
 import { useDispatch,useSelector } from 'react-redux'
@@ -6,10 +6,12 @@ import FormContainer from '../components/FormContainer'
 import { createShop} from '../features/product/productSlice'
 import Loader from '../components/Loader'
 import {toast} from 'react-toastify'
+import Meta from '../components/Meta'
+import context1 from '../context1'
 
 
  const CreateShopScreen  = () => {
-  
+    const {isEn,setIsEn}=useContext(context1)
     const [name,setName]=useState('')
     const [description,setDescription]=useState('')
     
@@ -60,6 +62,7 @@ const submitHandler=(e)=>{
 
   return (
     <>
+        <Meta title={isEn ? "Create A Shop" : "Cree Un Magasin"}/>
     <Link to='/' className='btn btn-light my-3'><i className="fa-solid fa-arrow-left"></i> Go Back</Link>
     <FormContainer>
         <h1 className='addLine'>Create Your Own Shop</h1>

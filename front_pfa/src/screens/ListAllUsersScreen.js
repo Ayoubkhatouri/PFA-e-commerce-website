@@ -8,6 +8,7 @@ import Loader from '../components/Loader'
 import {getAllUsers ,deleteUser,reset1,addUserLogin} from '../features/user/userSlice.js'
 import context1 from '../context1'
 import { toast } from 'react-toastify'
+import Meta from '../components/Meta'
 
 const ListAllUsersScreen = () => {
 
@@ -61,6 +62,7 @@ const ListAllUsersScreen = () => {
 
   return (
     <>
+     <Meta title={isEn ? "All Users" : "Tous Les Utilisateurs"}/>
         <h1 className='addLine mb-4'>{isEn ? "Users":'Utilisateurs'}</h1> 
         {isLoadingAllUsers ? <Loader/> : isErrorAllUsers ? <Message variant='danger'>{messageAllUsers}</Message> : (
             <Table striped bordered="true" hover responsive className='table-sm'>

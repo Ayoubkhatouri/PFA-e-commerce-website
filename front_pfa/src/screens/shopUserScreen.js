@@ -9,6 +9,7 @@ import Loader from '../components/Loader'
 import Count from '../components/Count'
 import { getAllShopOrders ,reset4} from '../features/order/orderSlice'
 import context1 from '../context1'
+import Meta from '../components/Meta'
 
 
 
@@ -75,7 +76,7 @@ const counts=[
 
   return (
     <>
-     
+     <Meta title={`${shop?.name}`}/>
      <div id="ct">
   <div className="corner "id="left_top"></div>
   <div className="corner" id="left_bottom"></div>
